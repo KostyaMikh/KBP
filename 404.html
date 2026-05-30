@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 — Page Not Found | KBP</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="styles.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        .error-main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 60px 20px 80px;
+        }
+
+        .error-badge {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 50px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            background: rgba(255, 94, 26, 0.12);
+            border: 1px solid rgba(255, 94, 26, 0.3);
+            color: var(--orange-light);
+        }
+
+        .error-code {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(6rem, 20vw, 12rem);
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, var(--orange-light), var(--red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 40px rgba(255, 94, 26, 0.4));
+            animation: errorPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes errorPulse {
+
+            0%,
+            100% {
+                filter: drop-shadow(0 0 40px rgba(255, 94, 26, 0.4));
+            }
+
+            50% {
+                filter: drop-shadow(0 0 70px rgba(255, 94, 26, 0.75));
+            }
+        }
+
+        .error-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(1.4rem, 4vw, 2.2rem);
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text);
+        }
+
+        .error-desc {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            max-width: 480px;
+            margin-bottom: 40px;
+        }
+
+        .error-actions {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 64px;
+        }
+
+        /* ===== HACK TERMINAL ===== */
+        .hack-terminal {
+            width: 100%;
+            max-width: 700px;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 255, 80, 0.2);
+            box-shadow: 0 0 60px rgba(0, 255, 80, 0.07);
+            font-family: 'Courier New', Courier, monospace;
+            text-align: left;
+            animation: fadeUp 0.6s ease 0.3s both;
+        }
+
+        .terminal-bar {
+            background: rgba(0, 20, 5, 0.9);
+            border-bottom: 1px solid rgba(0, 255, 80, 0.15);
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .terminal-dot:nth-child(1) {
+            background: #ff5f57;
+        }
+
+        .terminal-dot:nth-child(2) {
+            background: #febc2e;
+        }
+
+        .terminal-dot:nth-child(3) {
+            background: #28c840;
+        }
+
+        .terminal-title {
+            font-size: 0.75rem;
+            color: rgba(0, 255, 80, 0.4);
+            margin-left: 10px;
+            letter-spacing: 0.1em;
+        }
+
+        .terminal-body {
+            background: rgba(0, 8, 2, 0.92);
+            backdrop-filter: blur(20px);
+            padding: 20px 24px 28px;
+            min-height: 260px;
+            font-size: 0.82rem;
+            line-height: 1.75;
+            color: #00ff50;
+        }
+
+        .t-line {
+            display: block;
+            white-space: pre-wrap;
+            word-break: break-all;
+            min-height: 1.4em;
+        }
+
+        .t-line.dim {
+            color: rgba(0, 255, 80, 0.35);
+        }
+
+        .t-line.warn {
+            color: #febc2e;
+        }
+
+        .t-line.err {
+            color: #ff5f57;
+        }
+
+        .t-line.ok {
+            color: #28c840;
+        }
+
+        .t-line.cmd {
+            color: #ffffff;
+        }
+
+        .t-line.info {
+            color: #5edfff;
+        }
+
+        .terminal-cursor {
+            display: inline-block;
+            width: 8px;
+            height: 0.9em;
+            background: #00ff50;
+            vertical-align: text-bottom;
+            margin-left: 1px;
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- LOADING SCREEN -->
+    <div class="loader" id="loader">
+        <div class="loader-bg">
+            <div class="loader-orb loader-orb-1"></div>
+            <div class="loader-orb loader-orb-2"></div>
+        </div>
+        <div class="loader-content">
+            <div class="loader-logo">
+                <img src="logo.png" alt="KBP" onerror="this.src='logo.svg'">
+            </div>
+            <p class="loader-sub">Kostya's Best Presentations</p>
+            <div class="loader-bar-wrap">
+                <div class="loader-bar" id="loaderBar"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+    <div class="noise"></div>
+
+    <div class="container">
+        <header class="glass-header glass">
+            <a href="index.html" class="logo-wrap">
+                <img src="logo.png" alt="KBP" class="logo" onerror="this.src='logo.svg'">
+            </a>
+            <nav>
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="catalog.html" class="nav-link">Catalog</a>
+                <a href="order.html" class="nav-link">Order</a>
+            </nav>
+        </header>
+
+        <main class="error-main">
+            <span class="error-badge">Not Found</span>
+            <div class="error-code">404</div>
+            <h1 class="error-title">Page Not Found</h1>
+            <p class="error-desc">The page you're looking for doesn't exist or has been moved.</p>
+
+            <div class="error-actions">
+                <a href="index.html" class="btn btn-primary">
+                    <span class="btn-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 12l9-9 9 9M5 10v10h5v-6h4v6h5V10" />
+                        </svg>
+                    </span>
+                    Go Home
+                </a>
+                <a href="javascript:history.back()" class="btn btn-secondary">
+                    <span class="btn-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 12H5M12 5l-7 7 7 7" />
+                        </svg>
+                    </span>
+                    Go Back
+                </a>
+            </div>
+
+            <!-- HACKING TERMINAL -->
+            <div class="hack-terminal glass">
+                <div class="terminal-bar">
+                    <div class="terminal-dot"></div>
+                    <div class="terminal-dot"></div>
+                    <div class="terminal-dot"></div>
+                    <span class="terminal-title">root@kbp-server ~ bash</span>
+                </div>
+                <div class="terminal-body" id="terminalBody">
+                    <span class="terminal-cursor" id="cursor"></span>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="loader.js"></script>
+    <script>
+        // --- static intro lines ---
+        const introLines = [
+            { text: 'root@kbp-server:~$ traceroute ' + (window.location.pathname || '/???'), cls: 'cmd' },
+            { text: 'Tracing route to kbp-server...', cls: 'dim' },
+            { text: '1  192.168.0.1      1ms   2ms   1ms', cls: 'dim' },
+            { text: '2  10.0.0.254       8ms   7ms   9ms', cls: 'dim' },
+            { text: '3  * * * Request timeout', cls: 'warn' },
+            { text: '4  * * * Request timeout', cls: 'warn' },
+            { text: '', cls: '' },
+            { text: 'root@kbp-server:~$ locate missing_page.db', cls: 'cmd' },
+            { text: 'Scanning filesystem...', cls: 'dim' },
+            { text: '[ERROR] File not found in any known sector.', cls: 'err' },
+            { text: '', cls: '' },
+            { text: 'root@kbp-server:~$ sudo recover --deep --target=404', cls: 'cmd' },
+            { text: '[sudo] password for root: ••••••••', cls: 'dim' },
+            { text: 'Initialising deep scan... ██████████ 100%', cls: 'info' },
+            { text: 'Checking sectors 0x0000 → 0xFFFF...', cls: 'dim' },
+            { text: '[WARN]  Sector 0x3F2A corrupted. Skipping.', cls: 'warn' },
+            { text: '[WARN]  Sector 0x3F2B corrupted. Skipping.', cls: 'warn' },
+            { text: '[ERROR] Recovery failed. Page does not exist.', cls: 'err' },
+            { text: '', cls: '' },
+            { text: 'root@kbp-server:~$ ping existence.of/this/page', cls: 'cmd' },
+            { text: 'PING existence.of/this/page: 56 bytes of data.', cls: 'dim' },
+            { text: 'Request timeout for icmp_seq 0', cls: 'warn' },
+            { text: 'Request timeout for icmp_seq 1', cls: 'warn' },
+            { text: 'Request timeout for icmp_seq 2', cls: 'warn' },
+            { text: '--- ping statistics: 3 packets lost (100%)', cls: 'err' },
+            { text: '', cls: '' },
+            { text: 'root@kbp-server:~$ echo "Conclusion: this page is gone."', cls: 'cmd' },
+            { text: 'Conclusion: this page is gone.', cls: 'ok' },
+            { text: '', cls: '' },
+        ];
+
+        // --- infinite random line pool ---
+        const cmdPool = [
+            () => 'root@kbp-server:~$ nmap -sV -p 1-65535 ' + randIp(),
+            () => 'root@kbp-server:~$ hydra -l admin -P /usr/share/wordlists/rockyou.txt ' + randIp(),
+            () => 'root@kbp-server:~$ sqlmap -u "http://' + randIp() + '/login" --dbs',
+            () => 'root@kbp-server:~$ hashcat -m 0 hash.txt /usr/share/wordlists/rockyou.txt',
+            () => 'root@kbp-server:~$ aircrack-ng capture-01.cap -w wordlist.txt',
+            () => 'root@kbp-server:~$ metasploit -x "use exploit/multi/handler"',
+            () => 'root@kbp-server:~$ curl -s http://' + randIp() + '/admin --cookie "session=BYPASS"',
+            () => 'root@kbp-server:~$ python3 exploit.py --target ' + randIp() + ' --port ' + randPort(),
+            () => 'root@kbp-server:~$ ssh root@' + randIp() + ' -i id_rsa',
+            () => 'root@kbp-server:~$ gobuster dir -u http://' + randIp() + ' -w common.txt',
+            () => 'root@kbp-server:~$ wireshark -i eth0 -k -f "host ' + randIp() + '"',
+            () => 'root@kbp-server:~$ john --wordlist=rockyou.txt shadow.txt',
+            () => 'root@kbp-server:~$ nc -lvnp ' + randPort(),
+            () => 'root@kbp-server:~$ tcpdump -i eth0 -w capture.pcap',
+            () => 'root@kbp-server:~$ openssl s_client -connect ' + randIp() + ':443',
+        ];
+
+        const outputPool = [
+            () => [
+                { text: 'Starting scan... (' + randInt(1000, 9999) + ' ports)', cls: 'dim' },
+                { text: randInt(20, 80) + '/tcp  open  ' + pick(['ssh', 'http', 'https', 'ftp', 'smtp']), cls: 'ok' },
+                { text: randInt(80, 500) + '/tcp  open  ' + pick(['mysql', 'postgres', 'redis', 'mongodb']), cls: 'ok' },
+                { text: '[WARN]  Firewall detected on ' + randInt(3, 8) + ' ports.', cls: 'warn' },
+                { text: '', cls: '' },
+            ],
+            () => [
+                { text: 'Attempting login...', cls: 'dim' },
+                { text: '[ATTEMPT] target ' + randIp() + ' - login "admin" - pass "' + randPass() + '"', cls: 'dim' },
+                { text: '[ATTEMPT] target ' + randIp() + ' - login "admin" - pass "' + randPass() + '"', cls: 'dim' },
+                { text: pick(['[ERROR] All passwords failed.', '[SUCCESS] Password found: ' + randPass()]), cls: pick(['err', 'ok']) },
+                { text: '', cls: '' },
+            ],
+            () => [
+                { text: 'Injecting payload...', cls: 'dim' },
+                { text: '[INFO]  Testing parameter: id', cls: 'info' },
+                { text: '[INFO]  Testing parameter: user', cls: 'info' },
+                { text: '[WARN]  Possible SQL injection at param "id"', cls: 'warn' },
+                { text: 'Database: ' + pick(['users', 'accounts', 'kbp_db', 'secret_data']), cls: 'ok' },
+                { text: '', cls: '' },
+            ],
+            () => [
+                { text: 'Cracking hashes... ' + randInt(10, 99) + '% complete', cls: 'dim' },
+                { text: randHash() + ':' + randPass(), cls: 'ok' },
+                { text: randHash() + ':' + randPass(), cls: 'ok' },
+                { text: '[INFO]  ' + randInt(2, 12) + ' hashes cracked out of ' + randInt(50, 200), cls: 'info' },
+                { text: '', cls: '' },
+            ],
+            () => [
+                { text: 'Connecting to ' + randIp() + '...', cls: 'dim' },
+                { text: pick(['Connection refused.', 'Connection timed out.', 'Host unreachable.']), cls: 'err' },
+                { text: '', cls: '' },
+            ],
+            () => [
+                { text: 'Listening on 0.0.0.0:' + randPort(), cls: 'info' },
+                { text: 'Connection received from ' + randIp(), cls: 'ok' },
+                { text: 'Spawning shell...', cls: 'dim' },
+                { text: pick(['Shell established.', '[ERROR] Shell dropped. Retrying...']), cls: pick(['ok', 'err']) },
+                { text: '', cls: '' },
+            ],
+        ];
+
+        function randIp() { return [randInt(1, 254), randInt(0, 255), randInt(0, 255), randInt(1, 254)].join('.'); }
+        function randPort() { return randInt(1024, 65535); }
+        function randInt(a, b) { return Math.floor(Math.random() * (b - a + 1)) + a; }
+        function randPass() { const w = ['hunter2', 'password1', 'letmein', 'qwerty', 'abc123', 'monkey', 'dragon', 'sunshine']; return pick(w); }
+        function randHash() { let h = ''; for (let i = 0; i < 32; i++) h += '0123456789abcdef'[randInt(0, 15)]; return h; }
+        function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+        // Build a random cmd+output block
+        function randomBlock() {
+            const cmd = pick(cmdPool)();
+            const outputs = pick(outputPool)();
+            return [{ text: cmd, cls: 'cmd' }, ...outputs];
+        }
+
+        // The live queue — starts with intro, then grows infinitely
+        let queue = [...introLines];
+        let queueIndex = 0;
+
+        function getLine(i) {
+            // grow queue on demand
+            while (i >= queue.length) {
+                queue.push(...randomBlock());
+            }
+            return queue[i];
+        }
+
+        const body = document.getElementById('terminalBody');
+        const cursor = document.getElementById('cursor');
+
+        // --- state ---
+        let lineIndex = 0;
+        let charIndex = 0;
+        let currentSpan = null;
+        let started = false;
+
+        // hint shown before first keypress
+        const hint = document.createElement('span');
+        hint.className = 't-line dim';
+        hint.textContent = '> Waiting on your input...';
+        body.insertBefore(hint, cursor);
+
+        function ensureCurrentSpan() {
+            if (!currentSpan) {
+                const line = getLine(lineIndex);
+                currentSpan = document.createElement('span');
+                currentSpan.className = 't-line' + (line.cls ? ' ' + line.cls : '');
+                body.insertBefore(currentSpan, cursor);
+            }
+        }
+
+        // One keypress = one step forward
+        function step() {
+            const line = getLine(lineIndex);
+            ensureCurrentSpan();
+
+            if (line.cls === 'cmd') {
+                charIndex++;
+                currentSpan.textContent = line.text.slice(0, charIndex);
+                currentSpan.appendChild(cursor);
+                if (charIndex >= line.text.length) {
+                    body.appendChild(cursor);
+                    currentSpan = null;
+                    lineIndex++;
+                    charIndex = 0;
+                }
+            } else {
+                currentSpan.textContent = line.text;
+                currentSpan = null;
+                lineIndex++;
+                charIndex = 0;
+                // flush all following non-cmd lines at once
+                while (true) {
+                    const next = getLine(lineIndex);
+                    if (next.cls === 'cmd') break;
+                    const s = document.createElement('span');
+                    s.className = 't-line' + (next.cls ? ' ' + next.cls : '');
+                    s.textContent = next.text;
+                    body.appendChild(s);
+                    lineIndex++;
+                }
+                body.appendChild(cursor);
+            }
+
+            body.scrollTop = body.scrollHeight;
+        }
+
+        document.addEventListener('keydown', function (e) {
+            if (['Control', 'Alt', 'Shift', 'Meta', 'CapsLock', 'Tab'].includes(e.key)) return;
+
+            if (!started) {
+                started = true;
+                hint.remove();
+            }
+
+            playClick();
+            step();
+        });
+
+        // --- typing SFX via Web Audio API (no files needed) ---
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playClick() {
+            const buf = audioCtx.createBuffer(1, audioCtx.sampleRate * 0.04, audioCtx.sampleRate);
+            const data = buf.getChannelData(0);
+            for (let i = 0; i < data.length; i++) {
+                data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / data.length, 8);
+            }
+            const src = audioCtx.createBufferSource();
+            src.buffer = buf;
+
+            const filter = audioCtx.createBiquadFilter();
+            filter.type = 'highpass';
+            filter.frequency.value = 1800;
+
+            const gain = audioCtx.createGain();
+            gain.gain.value = 0.35;
+
+            src.connect(filter);
+            filter.connect(gain);
+            gain.connect(audioCtx.destination);
+            src.start();
+        }
+    </script>
+</body>
+
+</html>

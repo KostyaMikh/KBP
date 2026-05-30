@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catalog — KBP</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="styles.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- LOADING SCREEN -->
+    <div class="loader" id="loader">
+        <div class="loader-bg">
+            <div class="loader-orb loader-orb-1"></div>
+            <div class="loader-orb loader-orb-2"></div>
+        </div>
+        <div class="loader-content">
+            <div class="loader-logo">
+                <img src="logo.png" alt="KBP" onerror="this.src='logo.svg'">
+            </div>
+            <p class="loader-sub">Kostya's Best Presentations</p>
+            <div class="loader-bar-wrap">
+                <div class="loader-bar" id="loaderBar"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+    <div class="noise"></div>
+
+    <div class="container">
+        <header class="glass-header">
+            <a href="index.html" class="logo-wrap">
+                <img src="logo.png" alt="KBP" class="logo" onerror="this.src='logo.svg'">
+            </a>
+            <nav>
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="order.html" class="nav-link">Order</a>
+            </nav>
+        </header>
+
+        <main class="catalog-main">
+            <div class="catalog-header">
+                <h1 class="page-title">Presentation <span class="gradient-text">Catalog</span></h1>
+                <p class="page-sub">Filter by language or browse all themes</p>
+            </div>
+
+            <div class="filter-bar glass">
+                <span class="filter-label">Language:</span>
+                <div class="filter-pills" id="filterPills">
+                    <button class="pill active" data-lang="all">All</button>
+                    <button class="pill" data-lang="english">English</button>
+                    <button class="pill" data-lang="polski">Polski</button>
+                    <button class="pill" data-lang="espanol">Español</button>
+                </div>
+            </div>
+
+            <div class="catalog-grid" id="catalogGrid">
+
+                <!-- Sentinelczycy - Polski -->
+                <div class="pres-card glass" data-lang="polski">
+                    <div class="card-glow"></div>
+                    <a href="https://canva.link/jdr4lco27nu2r5b" target="_blank" class="card-thumb-link">
+                        <div class="card-thumb">
+                            <img src="thumbnails/sentinelczycy.jpg" alt="Sentinelczycy"
+                                onerror="this.parentElement.classList.add('thumb-missing')">
+                            <div class="thumb-overlay">
+                                <span class="thumb-play">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
+                                        <polyline points="15 3 21 3 21 9" />
+                                        <line x1="10" y1="14" x2="21" y2="3" />
+                                    </svg>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="card-body">
+                        <div class="card-top">
+                            <span class="lang-badge polski">Polski</span>
+                            <span class="theme-tag">Indigenous Peoples</span>
+                        </div>
+                        <h3 class="card-title">Sentinelczycy</h3>
+                        <a href="https://canva.link/jdr4lco27nu2r5b" target="_blank" class="card-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
+                                <polyline points="15 3 21 3 21 9" />
+                                <line x1="10" y1="14" x2="21" y2="3" />
+                            </svg>
+                            View Presentation
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Biom Taiga - Polski -->
+                <div class="pres-card glass" data-lang="polski">
+                    <div class="card-glow"></div>
+                    <a href="https://canva.link/hdb6jztrh3bsevd" target="_blank" class="card-thumb-link">
+                        <div class="card-thumb">
+                            <img src="thumbnails/taiga.jpg" alt="Biom Taiga"
+                                onerror="this.parentElement.classList.add('thumb-missing')">
+                            <div class="thumb-overlay">
+                                <span class="thumb-play">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
+                                        <polyline points="15 3 21 3 21 9" />
+                                        <line x1="10" y1="14" x2="21" y2="3" />
+                                    </svg>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="card-body">
+                        <div class="card-top">
+                            <span class="lang-badge polski">Polski</span>
+                            <span class="theme-tag">Nature & Ecology</span>
+                        </div>
+                        <h3 class="card-title">Biom Taiga</h3>
+                        <a href="https://canva.link/hdb6jztrh3bsevd" target="_blank" class="card-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
+                                <polyline points="15 3 21 3 21 9" />
+                                <line x1="10" y1="14" x2="21" y2="3" />
+                            </svg>
+                            View Presentation
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Czekolada - Polski -->
+                <div class="pres-card glass" data-lang="polski">
+                    <div class="card-glow"></div>
+                    <a href="https://canva.link/7svyfcwnnusc0qz" target="_blank" class="card-thumb-link">
+                        <div class="card-thumb">
+                            <img src="thumbnails/czekolada.jpg" alt="Czekolada"
+                                onerror="this.parentElement.classList.add('thumb-missing')">
+                            <div class="thumb-overlay">
+                                <span class="thumb-play">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
+                                        <polyline points="15 3 21 3 21 9" />
+                                        <line x1="10" y1="14" x2="21" y2="3" />
+                                    </svg>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="card-body">
+                        <div class="card-top">
+                            <span class="lang-badge polski">Polski</span>
+                            <span class="theme-tag">Food & Culture</span>
+                        </div>
+                        <h3 class="card-title">Czekolada</h3>
+                        <a href="https://canva.link/7svyfcwnnusc0qz" target="_blank" class="card-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
+                                <polyline points="15 3 21 3 21 9" />
+                                <line x1="10" y1="14" x2="21" y2="3" />
+                            </svg>
+                            View Presentation
+                        </a>
+                    </div>
+                </div>
+
+                <!-- The Pompeii Book - English -->
+                <div class="pres-card glass" data-lang="english">
+                    <div class="card-glow"></div>
+                    <a href="https://canva.link/992vc9cyxr82lym" target="_blank" class="card-thumb-link">
+                        <div class="card-thumb">
+                            <img src="thumbnails/pompeii.jpg" alt="The Pompeii Book"
+                                onerror="this.parentElement.classList.add('thumb-missing')">
+                            <div class="thumb-overlay">
+                                <span class="thumb-play">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
+                                        <polyline points="15 3 21 3 21 9" />
+                                        <line x1="10" y1="14" x2="21" y2="3" />
+                                    </svg>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="card-body">
+                        <div class="card-top">
+                            <span class="lang-badge english">English</span>
+                            <span class="theme-tag">History & Archaeology</span>
+                        </div>
+                        <h3 class="card-title">The Pompeii Book</h3>
+                        <a href="https://canva.link/992vc9cyxr82lym" target="_blank" class="card-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
+                                <polyline points="15 3 21 3 21 9" />
+                                <line x1="10" y1="14" x2="21" y2="3" />
+                            </svg>
+                            View Presentation
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 15 Preguntas - Español -->
+                <div class="pres-card glass" data-lang="espanol">
+                    <div class="card-glow"></div>
+                    <a href="https://canva.link/8qope4dji9gdlad" target="_blank" class="card-thumb-link">
+                        <div class="card-thumb">
+                            <img src="thumbnails/preguntas.jpg" alt="15 Preguntas"
+                                onerror="this.parentElement.classList.add('thumb-missing')">
+                            <div class="thumb-overlay">
+                                <span class="thumb-play">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
+                                        <polyline points="15 3 21 3 21 9" />
+                                        <line x1="10" y1="14" x2="21" y2="3" />
+                                    </svg>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="card-body">
+                        <div class="card-top">
+                            <span class="lang-badge espanol">Español</span>
+                            <span class="theme-tag">Quiz & Interactive</span>
+                        </div>
+                        <h3 class="card-title">15 Preguntas</h3>
+                        <a href="https://canva.link/8qope4dji9gdlad" target="_blank" class="card-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
+                                <polyline points="15 3 21 3 21 9" />
+                                <line x1="10" y1="14" x2="21" y2="3" />
+                            </svg>
+                            View Presentation
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Współczesny Prometeusz - Polski -->
+                <div class="pres-card glass" data-lang="polski">
+                    <div class="card-glow"></div>
+                    <a href="https://canva.link/0xmag7j2fdahhtu" target="_blank" class="card-thumb-link">
+                        <div class="card-thumb">
+                            <img src="thumbnails/prometeusz.jpg" alt="Współczesny Prometeusz"
+                                onerror="this.parentElement.classList.add('thumb-missing')">
+                            <div class="thumb-overlay">
+                                <span class="thumb-play">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
+                                        <polyline points="15 3 21 3 21 9" />
+                                        <line x1="10" y1="14" x2="21" y2="3" />
+                                    </svg>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="card-body">
+                        <div class="card-top">
+                            <span class="lang-badge polski">Polski</span>
+                            <span class="theme-tag">Literature & Mythology</span>
+                        </div>
+                        <h3 class="card-title">Współczesny Prometeusz</h3>
+                        <a href="https://canva.link/0xmag7j2fdahhtu" target="_blank" class="card-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
+                                <polyline points="15 3 21 3 21 9" />
+                                <line x1="10" y1="14" x2="21" y2="3" />
+                            </svg>
+                            View Presentation
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Jurassic Park Book - English -->
+                <div class="pres-card glass" data-lang="english">
+                    <div class="card-glow"></div>
+                    <a href="https://canva.link/foiyt8byrmnwzso" target="_blank" class="card-thumb-link">
+                        <div class="card-thumb">
+                            <img src="thumbnails/jurassic.jpg" alt="Jurassic Park Book Review"
+                                onerror="this.parentElement.classList.add('thumb-missing')">
+                            <div class="thumb-overlay">
+                                <span class="thumb-play">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
+                                        <polyline points="15 3 21 3 21 9" />
+                                        <line x1="10" y1="14" x2="21" y2="3" />
+                                    </svg>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="card-body">
+                        <div class="card-top">
+                            <span class="lang-badge english">English</span>
+                            <span class="theme-tag">Literature & Science</span>
+                        </div>
+                        <h3 class="card-title">Jurassic Park — Book Review</h3>
+                        <a href="https://canva.link/foiyt8byrmnwzso" target="_blank" class="card-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
+                                <polyline points="15 3 21 3 21 9" />
+                                <line x1="10" y1="14" x2="21" y2="3" />
+                            </svg>
+                            View Presentation
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="empty-state" id="emptyState" style="display:none">
+                <p>No presentations found for this language yet.</p>
+            </div>
+        </main>
+    </div>
+
+    <script src="loader.js"></script>
+    <script src="catalog.js"></script>
+</body>
+
+</html>

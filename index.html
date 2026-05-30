@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KBP Presentations</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="styles.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- LOADING SCREEN -->
+    <div class="loader" id="loader">
+        <div class="loader-bg">
+            <div class="loader-orb loader-orb-1"></div>
+            <div class="loader-orb loader-orb-2"></div>
+        </div>
+        <div class="loader-content">
+            <div class="loader-logo">
+                <img src="logo.png" alt="KBP" onerror="this.src='logo.svg'">
+            </div>
+            <p class="loader-sub">Kostya's Best Presentations</p>
+            <div class="loader-bar-wrap">
+                <div class="loader-bar" id="loaderBar"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <div class="noise"></div>
+
+    <div class="container">
+        <header class="glass-header">
+            <div class="logo-wrap">
+                <img src="logo.png" alt="KBP" class="logo" onerror="this.src='logo.svg'">
+            </div>
+        </header>
+
+        <main class="home-main">
+            <div class="hero">
+                <p class="hero-eyebrow">Premium Presentations</p>
+                <p class="hero-splash" id="heroSplash"></p>
+                <h1 class="hero-title">
+                    <span class="gradient-text">KBP</span>
+                    <br>Presentations
+                </h1>
+                <p class="hero-desc">High-quality educational presentations crafted for every language and theme</p>
+
+                <div class="hero-buttons">
+                    <a href="catalog.html" class="btn btn-primary">
+                        <span class="btn-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 6h16M4 10h16M4 14h8" />
+                                <rect x="14" y="12" width="8" height="8" rx="1" />
+                            </svg>
+                        </span>
+                        Browse Catalog
+                    </a>
+                    <a href="order.html" class="btn btn-secondary">
+                        <span class="btn-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.941z" />
+                            </svg>
+                        </span>
+                        Order Presentation
+                    </a>
+                </div>
+            </div>
+
+            <div class="stats-row">
+                <div class="stat-card glass">
+                    <span class="stat-num">7</span>
+                    <span class="stat-label">Presentations</span>
+                </div>
+                <div class="stat-card glass">
+                    <span class="stat-num">3</span>
+                    <span class="stat-label">Languages</span>
+                </div>
+                <div class="stat-card glass">
+                    <span class="stat-num">∞</span>
+                    <span class="stat-label">Possibilities</span>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="loader.js"></script>
+    <script>
+        const splashes = [
+            "GG user! 🎉",
+            "You actually showed up. Respect. 👏",
+            "Warning: may cause uncontrollable learning 🧠",
+            "Certified banger presentations only 🔥",
+            "Your teacher will be impressed. Probably. 📚",
+            "100% slide-to-wow ratio guaranteed ✨",
+            "Now with 20% more pizzazz 🍕",
+            "Presentations so good they're almost illegal 🚨",
+            "No boring slides were harmed in the making 😴❌",
+            "Powered by caffeine and creativity ☕",
+            "Making PowerPoint look cool since forever 😎",
+            "Your classmates will be jealous. Just saying. 👀",
+            "Achievement unlocked: good taste 🏆",
+            "Slides that slap. Hard. 🎵",
+            "Not responsible for standing ovations 👐",
+        ];
+        const el = document.getElementById('heroSplash');
+        el.textContent = splashes[Math.floor(Math.random() * splashes.length)];
+    </script>
+</body>
+
+</html>
