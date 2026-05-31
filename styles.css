@@ -1313,6 +1313,18 @@ nav {
     }
 }
 
+@keyframes pulseLive {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
+    }
+
+    50% {
+        box-shadow: 0 0 15px 4px rgba(255, 0, 0, 0.4);
+    }
+}
+
 #natureCanvas {
     display: block;
     width: 100%;
@@ -1444,4 +1456,38 @@ input[type="date"].form-input {
 .order-promo-sub {
     font-size: 0.85rem;
     color: var(--text-muted);
+}
+
+/* ===== LIVE PRESENTATION CARD ===== */
+.live-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(0, 255, 255, 0.4);
+    box-shadow: 0 20px 60px rgba(0, 255, 255, 0.2);
+}
+
+.live-card:hover .card-glow {
+    opacity: 1;
+}
+
+.live-card:hover img {
+    transform: scale(1.05);
+}
+
+.live-card:hover .thumb-overlay {
+    opacity: 1;
+}
+
+.live-card:hover .thumb-play {
+    transform: scale(1);
+}
+
+/* Responsive adjustments for live card */
+@media (max-width: 640px) {
+    .live-presentation-section {
+        padding: 0 20px 40px;
+    }
+
+    .live-card {
+        margin: 0 auto;
+    }
 }
