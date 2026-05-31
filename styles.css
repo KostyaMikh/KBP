@@ -1430,17 +1430,18 @@ input[type="date"].form-input {
 
 .order-promo-title {
     font-family: 'Orbitron', sans-serif;
-    font-size: 1.05rem;
+    font-size: 1rem;
     font-weight: 900;
     background: linear-gradient(135deg, var(--orange-light), var(--red));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 .order-promo-sub {
     font-size: 0.85rem;
     color: var(--text-muted);
-    line-height: 1.5;
 }
