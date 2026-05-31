@@ -51,30 +51,104 @@
 
         <main class="order-main">
             <h1 class="page-title">Order a <span class="gradient-text">Presentation</span></h1>
-            <p class="page-sub">Reach out on Telegram — fast, direct, personal</p>
+            <p class="page-sub">Fill in the form — we'll open Telegram with your message ready to send</p>
 
             <div class="order-center">
-                <div class="order-card glass">
-                    <div class="tg-icon-wrap">
+
+                <!-- Promo banner -->
+                <div class="order-promo glass">
+                    <span class="order-promo-star">🎉</span>
+                    <div>
+                        <p class="order-promo-title">First order completely free!</p>
+                        <p class="order-promo-sub">Price for future orders? Discuss it with us on Telegram — we'll work
+                            something out.</p>
+                    </div>
+                    <span class="order-promo-star">🎉</span>
+                </div>
+
+                <div class="order-card glass" style="max-width:640px;align-items:stretch;gap:0;">
+
+                    <div class="tg-icon-wrap" style="margin:0 auto 24px;">
                         <svg class="tg-icon" viewBox="0 0 24 24" fill="currentColor">
                             <path
                                 d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.941z" />
                         </svg>
                     </div>
 
-                    <h2>Contact on Telegram</h2>
-                    <p class="order-desc">Send us your topic, language, and any requirements — we'll get back to you
-                        quickly with a custom presentation.</p>
+                    <h2 style="text-align:center;margin-bottom:28px;">Order Form</h2>
 
-                    <a href="https://t.me/itztroy_en" target="_blank" class="tg-btn">
-                        <svg viewBox="0 0 24 24" fill="currentColor" class="tg-btn-icon">
-                            <path
-                                d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.941z" />
-                        </svg>
-                        Open Telegram
-                    </a>
+                    <form id="orderForm" class="order-form" onsubmit="submitOrder(event)">
 
-                    <p class="tg-note">If the link doesn't work look in telegram "@itztroy_en"</p>
+                        <!-- Language -->
+                        <div class="form-group">
+                            <label class="form-label" for="lang">Language</label>
+                            <input class="form-input" type="text" id="lang"
+                                placeholder="e.g. English, Polski, Español, Deutsch…" required>
+                        </div>
+
+                        <!-- Theme -->
+                        <div class="form-group">
+                            <label class="form-label" for="theme">Theme / Topic</label>
+                            <input class="form-input" type="text" id="theme"
+                                placeholder="e.g. World War II, Photosynthesis, Climate Change…" required>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="form-group">
+                            <label class="form-label" for="desc">Describe what you want</label>
+                            <textarea class="form-input form-textarea" id="desc" rows="4"
+                                placeholder="Any specific slides, structure, style, sources, or details you'd like included…"
+                                required></textarea>
+                        </div>
+
+                        <!-- Jokes -->
+                        <div class="form-group">
+                            <label class="form-label">Include jokes?</label>
+                            <div class="form-radio-group">
+                                <label class="form-radio">
+                                    <input type="radio" name="jokes" value="Yes" required>
+                                    <span>😄 Yes please</span>
+                                </label>
+                                <label class="form-radio">
+                                    <input type="radio" name="jokes" value="No">
+                                    <span>🙅 No thanks</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Deadline -->
+                        <div class="form-group">
+                            <label class="form-label">Deadline</label>
+                            <div class="form-radio-group">
+                                <label class="form-radio">
+                                    <input type="radio" name="deadline" value="ASAP" id="deadlineASAP" required>
+                                    <span>⚡ As soon as possible</span>
+                                </label>
+                                <label class="form-radio">
+                                    <input type="radio" name="deadline" value="whenever" id="deadlineWhenever">
+                                    <span>🕐 Whenever you can</span>
+                                </label>
+                                <label class="form-radio">
+                                    <input type="radio" name="deadline" value="specific" id="deadlineSpecific">
+                                    <span>📅 Specific date</span>
+                                </label>
+                            </div>
+                            <input class="form-input" type="date" id="specificDate"
+                                style="display:none;margin-top:10px;">
+                        </div>
+
+                        <button type="submit" class="tg-btn"
+                            style="width:100%;justify-content:center;margin-top:8px;border:none;cursor:pointer;">
+                            <svg viewBox="0 0 24 24" fill="currentColor" class="tg-btn-icon">
+                                <path
+                                    d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.941z" />
+                            </svg>
+                            Send via Telegram
+                        </button>
+
+                        <p class="tg-note" style="text-align:center;margin-top:12px;">Opens Telegram with your message
+                            pre-filled. If it doesn't work, search <strong>@itztroy_en</strong></p>
+                    </form>
                 </div>
 
                 <div class="order-info-grid">
@@ -90,8 +164,8 @@
                     </div>
                     <div class="info-tile glass">
                         <span class="info-icon">🌍</span>
-                        <h4>3 Languages</h4>
-                        <p>English, Polski, Español</p>
+                        <h4>Any Language</h4>
+                        <p>English, Polski, Español, and more</p>
                     </div>
                     <div class="info-tile glass">
                         <span class="info-icon">✅</span>
@@ -115,6 +189,42 @@
         </main>
     </div>
     <script src="loader.js"></script>
+    <script>
+        // Show/hide specific date picker
+        document.querySelectorAll('input[name="deadline"]').forEach(function (r) {
+            r.addEventListener('change', function () {
+                document.getElementById('specificDate').style.display =
+                    this.value === 'specific' ? 'block' : 'none';
+            });
+        });
+
+        function submitOrder(e) {
+            e.preventDefault();
+
+            const lang = document.getElementById('lang').value.trim();
+            const theme = document.getElementById('theme').value.trim();
+            const desc = document.getElementById('desc').value.trim();
+            const jokes = document.querySelector('input[name="jokes"]:checked').value;
+            const deadline = document.querySelector('input[name="deadline"]:checked').value;
+            const dateVal = document.getElementById('specificDate').value;
+
+            let deadlineText;
+            if (deadline === 'ASAP') deadlineText = 'As soon as possible';
+            else if (deadline === 'whenever') deadlineText = 'Whenever you can';
+            else deadlineText = 'By ' + (dateVal || 'a specific date');
+
+            const msg =
+                '📋 Presentation Order\n\n' +
+                '🌍 Language: ' + lang + '\n' +
+                '📌 Theme: ' + theme + '\n' +
+                '📝 Details: ' + desc + '\n' +
+                '😄 Jokes: ' + jokes + '\n' +
+                '📅 Deadline: ' + deadlineText;
+
+            const encoded = encodeURIComponent(msg);
+            window.open('https://t.me/itztroy_en?text=' + encoded, '_blank');
+        }
+    </script>
 </body>
 
 </html>
