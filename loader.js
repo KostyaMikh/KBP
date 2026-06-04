@@ -1,5 +1,11 @@
 // Loading screen controller
 (function () {
+    // Block mobile devices
+    if (window.matchMedia('(max-width: 768px)').matches ||
+        window.matchMedia('(pointer: coarse)').matches) {
+        document.body.classList.add('mobile-blocked');
+    }
+
     const loader = document.getElementById('loader');
     const bar = document.getElementById('loaderBar');
 
