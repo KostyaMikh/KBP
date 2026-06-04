@@ -87,8 +87,10 @@
           Create one at
           <a href="https://github.com/settings/tokens/new?scopes=repo,read:user&description=KBP+Dev+Tools"
              target="_blank" rel="noopener">
-            GitHub → Settings → Tokens (classic)
-          </a>. Needs <code>repo</code> + <code>read:user</code> scopes.
+            GitHub &rarr; Settings &rarr; Tokens (classic)
+          </a>.<br>
+          Tick <strong style="color:#ff8c42">repo</strong> (full) + <strong style="color:#ff8c42">read:user</strong>.
+          Without <code>repo</code> scope, pushing will give a 403 error.
         </p>
         <button class="dev-login-btn" id="devLoginBtn">
           <span class="btn-spinner"></span>
@@ -108,6 +110,7 @@
         <button class="dp-tab active" data-tab="colors">🎨 Theme</button>
         <button class="dp-tab"        data-tab="manager">🖼 Cards</button>
         <button class="dp-tab"        data-tab="new">➕ New</button>
+        <button class="dp-tab"        data-tab="edit">✏️ Edit</button>
         <button class="dp-tab"        data-tab="git">🚀 Git</button>
       </div>
       <div class="dp-body">
@@ -180,6 +183,42 @@
           </button>
         </div>
 
+        <!-- EDIT TAB -->
+        <div class="dp-pane" id="dpPane-edit">
+          <p class="dp-section-title">Delete any element</p>
+          <p style="font-size:.78rem;color:rgba(240,240,245,.38);line-height:1.6;margin-bottom:12px">
+            Enable delete mode, then hover over anything on the page and click the red ✕ to remove it.
+          </p>
+          <button class="dp-save-btn" id="dpDeleteToggle">
+            <span class="btn-text">🗑 Enable Delete Mode</span>
+          </button>
+          <p class="dp-git-status" id="dpDeleteStatus"></p>
+
+          <hr class="dp-divider">
+          <p class="dp-section-title">Add a text block</p>
+          <p style="font-size:.78rem;color:rgba(240,240,245,.38);line-height:1.6;margin-bottom:12px">
+            Type your text, then click <strong style="color:rgba(240,240,245,.6)">Pick position</strong>
+            and click any element on the page — the block will be inserted before it.
+          </p>
+          <div class="dp-field">
+            <label>Content (HTML allowed)</label>
+            <textarea id="dpTextContent" placeholder="e.g. &lt;h2&gt;New Section&lt;/h2&gt; or plain text"></textarea>
+          </div>
+          <div class="dp-field">
+            <label>Style</label>
+            <select id="dpTextStyle">
+              <option value="">Plain text</option>
+              <option value="heading">Heading (Orbitron)</option>
+              <option value="banner">Announcement banner</option>
+              <option value="note">Muted note</option>
+            </select>
+          </div>
+          <button class="dp-save-btn secondary" id="dpPickPosition" style="margin-top:8px">
+            <span class="btn-text">🎯 Pick Position on Page</span>
+          </button>
+          <p class="dp-git-status" id="dpInsertStatus">Ready — pick a position first.</p>
+        </div>
+
         <!-- GIT TAB -->
         <div class="dp-pane" id="dpPane-git">
           <p class="dp-section-title">Push changes to GitHub</p>
@@ -226,12 +265,13 @@
 
   // ── GitHub API helpers ─────────────────────────────────────────────────────
   function ghHeaders() {
-    return {
-      Authorization: 'Bearer ' + sessionStorage.getItem(KEY_TOKEN),
-      Accept: 'application/vnd.github+json',
-      'X-GitHub-Api-Version': '2022-11-28',
-      'Content-Type': 'application/json',
-    };
+    // Note: header values must be plain ASCII — no smart quotes or special chars
+    const token = sessionStorage.getItem(KEY_TOKEN) || '';
+    const h = new Headers();
+    h.append('Authorization', 'Bearer ' + token);
+    h.append('Accept', 'application/vnd.github+json');
+    h.append('Content-Type', 'application/json');
+    return h;
   }
 
   async function ghGet(path) {
@@ -242,20 +282,19 @@
 
   async function ghPut(path, body) {
     const r = await fetch('https://api.github.com' + path, {
-      method: 'PUT', headers: ghHeaders(), body: JSON.stringify(body),
+      method: 'PUT',
+      headers: ghHeaders(),
+      body: JSON.stringify(body),
     });
     if (!r.ok) throw new Error('GitHub ' + r.status + ': ' + (await r.text()));
     return r.json();
   }
 
   async function verifyToken(token) {
-    const r = await fetch('https://api.github.com/user', {
-      headers: {
-        Authorization: 'Bearer ' + token,
-        Accept: 'application/vnd.github+json',
-        'X-GitHub-Api-Version': '2022-11-28',
-      },
-    });
+    const h = new Headers();
+    h.append('Authorization', 'Bearer ' + token);
+    h.append('Accept', 'application/vnd.github+json');
+    const r = await fetch('https://api.github.com/user', { headers: h });
     if (r.status === 401) throw new Error('Token invalid or expired.');
     if (!r.ok) throw new Error('GitHub API error (' + r.status + ').');
     return (await r.json()).login;
@@ -351,6 +390,8 @@
   });
 
   // ── Manager tab ────────────────────────────────────────────────────────────
+  let managerBuilt = false;
+
   function applyOrder() {
     const grid  = $('catalogGrid');
     const order = ls(KEY_ORDER);
@@ -370,7 +411,9 @@
     });
   }
 
-  function buildManagerTab() {
+  function buildManagerTab(force) {
+    if (managerBuilt && !force) return;
+    managerBuilt = true;
     const list = $('dpCardList');
     if (!list) return;
     list.innerHTML = '';
@@ -717,22 +760,186 @@
       statusEl.className   = 'dp-git-status ok';
       showToast('Pushed to GitHub ✓', 'success');
     } catch (err) {
-      statusEl.textContent = '✗ ' + err.message;
+      let msg = err.message;
+      if (msg.includes('403')) {
+        msg = '403: Token needs "repo" scope. Go to github.com/settings/tokens, delete the old token, create a new one with the "repo" checkbox ticked, then log out and log back in.';
+      }
+      statusEl.textContent = '✗ ' + msg;
       statusEl.className   = 'dp-git-status error';
-      showToast('Push failed', 'error');
+      showToast('Push failed — see Git tab', 'error');
     } finally {
       btn.classList.remove('loading'); btn.disabled = false;
     }
   });
 
+  // ── Edit tab: delete mode + insert element ────────────────────────────────
+  let deleteMode   = false;
+  let insertMode   = false;
+  let lastHovered  = null;
+
+  // Elements we never want to allow deleting (dev tools own UI)
+  const PROTECTED = ['devPanel','devBadge','devLoginTrigger','devLogoutBtn',
+                     'devAuthModal','devToast'];
+
+  function isProtected(el) {
+    return PROTECTED.some(id => el.id === id || el.closest('#' + id));
+  }
+
+  // ── Delete mode ──
+  function setDeleteMode(on) {
+    deleteMode = on;
+    const btn = $('dpDeleteToggle');
+    const st  = $('dpDeleteStatus');
+    if (on) {
+      btn.textContent = '✅ Delete Mode ON — click to disable';
+      btn.style.background = 'linear-gradient(135deg,#dc2626,#991b1b)';
+      st.textContent  = 'Hover an element and click ✕ to delete it.';
+      st.className    = 'dp-git-status ok';
+      document.body.classList.add('kbp-delete-mode');
+    } else {
+      btn.innerHTML   = '<span class="btn-text">🗑 Enable Delete Mode</span>';
+      btn.style.background = '';
+      st.textContent  = '';
+      st.className    = 'dp-git-status';
+      document.body.classList.remove('kbp-delete-mode');
+      removeDeleteOverlay();
+    }
+  }
+
+  $('dpDeleteToggle').addEventListener('click', () => setDeleteMode(!deleteMode));
+
+  // Overlay div that floats over the hovered element
+  const delOverlay = document.createElement('div');
+  delOverlay.id = 'kbpDelOverlay';
+  delOverlay.innerHTML = '✕';
+  delOverlay.title = 'Delete this element';
+  document.body.appendChild(delOverlay);
+
+  function removeDeleteOverlay() {
+    delOverlay.style.display = 'none';
+    lastHovered = null;
+  }
+
+  document.addEventListener('mouseover', e => {
+    if (!deleteMode) return;
+    const target = e.target.closest('[class],[id]');
+    if (!target || isProtected(target) || target === delOverlay) return;
+    lastHovered = target;
+    const r = target.getBoundingClientRect();
+    delOverlay.style.cssText = `
+      display:flex; position:fixed;
+      top:${r.top}px; left:${r.left}px;
+      width:${r.width}px; height:${r.height}px;
+      border:2px solid #ef4444; border-radius:4px;
+      background:rgba(239,68,68,.08);
+      align-items:center; justify-content:center;
+      font-size:1.6rem; color:#ef4444; cursor:pointer;
+      z-index:9080; pointer-events:auto; box-sizing:border-box;
+      font-weight:700; user-select:none;`;
+  });
+
+  document.addEventListener('mouseout', e => {
+    if (!deleteMode) return;
+    if (e.relatedTarget === delOverlay) return;
+    if (!delOverlay.contains(e.relatedTarget)) removeDeleteOverlay();
+  });
+
+  delOverlay.addEventListener('mouseleave', removeDeleteOverlay);
+
+  delOverlay.addEventListener('click', () => {
+    if (!lastHovered) return;
+    if (confirm('Delete this element? This cannot be undone until you refresh.')) {
+      lastHovered.remove();
+      removeDeleteOverlay();
+      showToast('Element deleted', '');
+      managerBuilt = false; // re-sync manager list next open
+    }
+  });
+
+  // ── Insert text/element mode ──
+  function setInsertMode(on) {
+    insertMode = on;
+    const btn = $('dpPickPosition');
+    const st  = $('dpInsertStatus');
+    if (on) {
+      btn.textContent = '❌ Cancel';
+      st.textContent  = 'Click any element on the page — content inserts before it.';
+      st.className    = 'dp-git-status ok';
+      document.body.classList.add('kbp-insert-mode');
+    } else {
+      btn.innerHTML   = '<span class="btn-text">🎯 Pick Position on Page</span>';
+      st.textContent  = 'Ready — pick a position first.';
+      st.className    = 'dp-git-status';
+      document.body.classList.remove('kbp-insert-mode');
+    }
+  }
+
+  $('dpPickPosition').addEventListener('click', () => setInsertMode(!insertMode));
+
+  function buildTextHTML(content, style) {
+    if (style === 'heading') {
+      return `<h2 style="font-family:'Orbitron',sans-serif;font-size:clamp(1.5rem,4vw,2.5rem);
+        font-weight:900;text-align:center;margin:40px 0 20px;
+        background:linear-gradient(135deg,var(--orange-light),var(--red));
+        -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+        background-clip:text;" data-dev-inserted="1">${content}</h2>`;
+    }
+    if (style === 'banner') {
+      return `<div class="glass" data-dev-inserted="1"
+        style="margin:24px auto;max-width:900px;padding:20px 28px;border-radius:16px;
+        border:1px solid rgba(255,94,26,.3);background:rgba(255,94,26,.07);
+        font-size:.95rem;color:var(--text-muted);line-height:1.6;text-align:center;">
+        ${content}</div>`;
+    }
+    if (style === 'note') {
+      return `<p data-dev-inserted="1"
+        style="text-align:center;font-size:.85rem;color:var(--text-muted);
+        font-style:italic;margin:20px 0;">${content}</p>`;
+    }
+    return `<p data-dev-inserted="1"
+      style="font-size:1rem;color:var(--text);line-height:1.7;margin:20px 0;">
+      ${content}</p>`;
+  }
+
+  // Capture page click when in insert mode
+  document.addEventListener('click', e => {
+    if (!insertMode) return;
+    // Ignore clicks inside the dev panel itself
+    if (e.target.closest('#devPanel')) return;
+    e.preventDefault();
+    e.stopPropagation();
+
+    const content = $('dpTextContent').value.trim();
+    if (!content) {
+      showToast('Enter some content first', 'error');
+      setInsertMode(false);
+      return;
+    }
+
+    const style   = $('dpTextStyle').value;
+    const html    = buildTextHTML(content, style);
+    const target  = e.target.closest('[class],[id]') || e.target;
+
+    target.insertAdjacentHTML('beforebegin', html);
+    setInsertMode(false);
+    $('dpInsertStatus').textContent = '✓ Inserted!';
+    $('dpInsertStatus').className   = 'dp-git-status ok';
+    showToast('Element inserted ✓', 'success');
+  }, true); // capture phase so we get it before other handlers
+
   // ── Panel open/close ───────────────────────────────────────────────────────
   function openPanel() {
     $('devPanel').classList.add('open');
-    buildColorRows();
+    // Build colour rows once
+    if (!$('dpColorRows').children.length) buildColorRows();
+    // Build manager only once
     buildManagerTab();
     renderBtnList();
   }
-  function closePanel() { $('devPanel').classList.remove('open'); }
+  function closePanel() {
+    $('devPanel').classList.remove('open');
+    // Keep delete/insert mode active even when panel is closed so you can use the page freely
+  }
 
   $('dpClose').addEventListener('click', closePanel);
 
@@ -743,7 +950,7 @@
     document.querySelectorAll('.dp-pane').forEach(p => p.classList.remove('active'));
     tab.classList.add('active');
     $('dpPane-' + tab.dataset.tab).classList.add('active');
-    if (tab.dataset.tab === 'manager') buildManagerTab();
+    if (tab.dataset.tab === 'manager') buildManagerTab(true); // force refresh
   });
 
   // ── Auth ───────────────────────────────────────────────────────────────────
@@ -775,6 +982,8 @@
     $('devBadge').style.display = 'none';
     $('devLogoutBtn').classList.remove('visible');
     $('devLoginTrigger').style.display = 'flex';
+    setDeleteMode(false);
+    setInsertMode(false);
     closePanel();
     document.dispatchEvent(new CustomEvent('kbpDevLogout'));
   }

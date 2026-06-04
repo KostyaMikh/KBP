@@ -350,3 +350,27 @@ input[type="color"].dp-color-picker {
 #devToast.show { transform: translateY(0); opacity: 1; }
 #devToast.success { border-color: rgba(134, 239, 172, 0.4); color: #86efac; }
 #devToast.error   { border-color: rgba(248, 113, 113, 0.4); color: #f87171; }
+
+/* ════════════════════════════════════════
+   EDIT MODE — delete overlay & insert cursor
+════════════════════════════════════════ */
+
+/* Delete mode: show crosshair cursor on body */
+body.kbp-delete-mode * {
+  cursor: crosshair !important;
+}
+
+/* Delete overlay */
+#kbpDelOverlay {
+  display: none;
+  transition: top 0.06s, left 0.06s, width 0.06s, height 0.06s;
+}
+
+/* Insert mode: show plus cursor and highlight hovered elements */
+body.kbp-insert-mode *:not(#devPanel):not(#devPanel *) {
+  cursor: cell !important;
+}
+body.kbp-insert-mode *:not(#devPanel):not(#devPanel *):hover {
+  outline: 2px dashed rgba(34, 197, 94, 0.5) !important;
+  outline-offset: 2px !important;
+}
