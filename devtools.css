@@ -267,6 +267,18 @@ input[type="color"].dp-color-picker {
 }
 .dp-thumb-btn:hover { border-color: rgba(255, 94, 26, 0.4); color: #ff8c42; }
 
+.dp-delete-card-btn {
+  background: none; border: 1px solid rgba(248, 113, 113, 0.15);
+  border-radius: 5px; color: rgba(248, 113, 113, 0.4);
+  font-size: 0.75rem; padding: 4px 6px; cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, background 0.2s; flex-shrink: 0;
+}
+.dp-delete-card-btn:hover {
+  border-color: rgba(248, 113, 113, 0.6);
+  color: #f87171;
+  background: rgba(248, 113, 113, 0.08);
+}
+
 /* ── New card form ── */
 .dp-field { margin-bottom: 12px; }
 .dp-field label {

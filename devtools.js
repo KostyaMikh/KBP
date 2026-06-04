@@ -445,7 +445,8 @@
           <div class="dp-card-name">${title}</div>
           <div class="dp-card-lang">${lang}</div>
         </div>
-        <button class="dp-thumb-btn">🖼 Replace</button>`;
+        <button class="dp-thumb-btn">🖼</button>
+        <button class="dp-delete-card-btn" title="Delete card">🗑</button>`;
       list.appendChild(item);
 
       // File picker for thumb replacement
@@ -474,6 +475,34 @@
           showToast('Thumbnail updated ✓ (saved locally)', 'success');
         };
         reader.readAsDataURL(file);
+      });
+
+      // Delete card button
+      item.querySelector('.dp-delete-card-btn').addEventListener('click', e => {
+        e.stopPropagation();
+        if (!confirm('Delete "' + title + '"? This removes it from the page.\nUse "Commit & Push" afterwards to save permanently.')) return;
+
+        // Remove from the catalog grid DOM
+        const domCard = document.querySelector('.pres-card[data-id="' + id + '"]');
+        if (domCard) domCard.remove();
+
+        // Remove from localStorage custom cards if it's a custom one
+        const customs = ls(KEY_CUSTOM) || [];
+        const filtered = customs.filter(c => c.id !== id);
+        if (filtered.length !== customs.length) lsSet(KEY_CUSTOM, filtered);
+
+        // Remove from saved order
+        const order = ls(KEY_ORDER) || [];
+        lsSet(KEY_ORDER, order.filter(oid => oid !== id));
+
+        // Remove from saved thumbs
+        const thumbs = ls(KEY_THUMBS) || {};
+        delete thumbs[id];
+        lsSet(KEY_THUMBS, thumbs);
+
+        // Remove from the manager list
+        item.remove();
+        showToast('"' + title + '" deleted', '');
       });
     });
 
