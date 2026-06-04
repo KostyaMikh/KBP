@@ -50,8 +50,8 @@ body {
 }
 
 .orb-1 {
-    width: 600px;
-    height: 600px;
+    width: 400px;
+    height: 400px;
     background: radial-gradient(circle, #ff5e1a, transparent 70%);
     top: -200px;
     left: -150px;
@@ -59,8 +59,8 @@ body {
 }
 
 .orb-2 {
-    width: 500px;
-    height: 500px;
+    width: 350px;
+    height: 350px;
     background: radial-gradient(circle, #e63000, transparent 70%);
     bottom: -150px;
     right: -100px;
@@ -68,8 +68,8 @@ body {
 }
 
 .orb-3 {
-    width: 400px;
-    height: 400px;
+    width: 300px;
+    height: 300px;
     background: radial-gradient(circle, #ff8c42, transparent 70%);
     top: 50%;
     left: 50%;
@@ -121,8 +121,20 @@ body {
 .glass {
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
+}
+
+/* Only apply backdrop-filter to elements where the blur effect is actually visible */
+.glass-header,
+.filter-bar,
+.stat-card,
+.btn-secondary {
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
+}
+
+/* Cards sit on a near-opaque dark background — blur is invisible there, skip it */
+.pres-card {
+    /* no backdrop-filter */
 }
 
 /* ===== CONTAINER ===== */
@@ -309,7 +321,6 @@ nav {
     background: var(--glass-bg);
     color: var(--text);
     border: 1px solid var(--glass-border);
-    backdrop-filter: blur(20px);
 }
 
 .btn-secondary:hover {
@@ -445,10 +456,11 @@ nav {
     padding: 28px;
     position: relative;
     overflow: hidden;
-    transition: all 0.35s;
+    transition: transform 0.35s, border-color 0.35s, box-shadow 0.35s;
     display: flex;
     flex-direction: column;
     gap: 12px;
+    will-change: transform;
 }
 
 .pres-card:hover {
