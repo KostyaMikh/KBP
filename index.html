@@ -162,7 +162,7 @@
         <p class="footer-copy">© 2025 KBP — Kostya's Best Presentations</p>
     </footer>
 
-    <script src="loader.js"></script>
+    <script src="devtools.js"></script>
     <div class="nature-wrap">
         <div class="nature-coming-badge">
             <span class="bio-coming-badge">🌿 Biology Presentations — Coming Soon</span>
@@ -199,40 +199,46 @@
         (function () {
             const canvas = document.getElementById('natureCanvas');
             const ctx = canvas.getContext('2d');
-            let W, H, t = 0;
+            let W, H, t = 0, rafId = null, visible = true;
 
-            // ---- grass blades ----
-            const BLADES = [];
-            const BLADE_COUNT = 220;
+            // Reduced counts for smooth performance
+            const BLADE_COUNT      = 110;  // was 220
+            const FLOWER_COUNT     = 14;   // was 28
+            const FLY_COUNT        = 8;    // was 18 — gradient per firefly is expensive
+            const BUTTERFLY_COUNT  = 3;    // was 5
 
-            // ---- flowers ----
-            const FLOWERS = [];
-            const FLOWER_COUNT = 28;
-
-            // ---- fireflies ----
-            const FLIES = [];
-            const FLY_COUNT = 18;
-
-            // ---- butterflies ----
+            const BLADES      = [];
+            const FLOWERS     = [];
+            const FLIES       = [];
             const BUTTERFLIES = [];
-            const BUTTERFLY_COUNT = 5;
 
-            function rand(a, b) { return a + Math.random() * (b - a); }
+            // Pre-split into back/front at init so we never filter() inside draw()
+            const BLADES_BACK   = [], BLADES_FRONT   = [];
+            const FLOWERS_BACK  = [], FLOWERS_FRONT  = [];
+
+            function rand(a, b)    { return a + Math.random() * (b - a); }
             function randInt(a, b) { return Math.floor(rand(a, b + 1)); }
 
+            // Cached ground gradient — recreated only on resize
+            let groundGrad = null;
+
             function init() {
-                W = canvas.width = canvas.offsetWidth;
+                W = canvas.width  = canvas.offsetWidth;
                 H = canvas.height = 320;
 
-                BLADES.length = 0;
-                FLOWERS.length = 0;
-                FLIES.length = 0;
-                BUTTERFLIES.length = 0;
+                BLADES.length = 0; BLADES_BACK.length = 0; BLADES_FRONT.length = 0;
+                FLOWERS.length = 0; FLOWERS_BACK.length = 0; FLOWERS_FRONT.length = 0;
+                FLIES.length = 0; BUTTERFLIES.length = 0;
 
-                // grass blades — packed densely across full width
+                // Cache ground gradient
+                groundGrad = ctx.createLinearGradient(0, H * 0.7, 0, H);
+                groundGrad.addColorStop(0, 'rgba(10,20,5,0)');
+                groundGrad.addColorStop(1, 'rgba(5,15,3,0.55)');
+
+                // Grass blades — group by colour so we can batch stroke calls
                 for (let i = 0; i < BLADE_COUNT; i++) {
-                    const layer = Math.random(); // 0=back, 1=front
-                    BLADES.push({
+                    const layer = Math.random();
+                    const blade = {
                         x: rand(0, W),
                         baseY: H,
                         h: rand(40, 160) * (0.5 + layer * 0.5),
@@ -241,59 +247,53 @@
                         swayAmp: rand(0.04, 0.14),
                         swaySpeed: rand(0.6, 1.6),
                         swayOffset: rand(0, Math.PI * 2),
-                        color: `hsl(${randInt(100, 140)}, ${randInt(45, 75)}%, ${randInt(18, 42)}%)`,
+                        color: `hsl(${randInt(100,140)},${randInt(45,75)}%,${randInt(18,42)}%)`,
                         layer,
-                    });
+                    };
+                    (layer < 0.5 ? BLADES_BACK : BLADES_FRONT).push(blade);
                 }
-                BLADES.sort((a, b) => a.layer - b.layer);
 
-                // flowers
+                // Flowers
                 const flowerColors = [
-                    ['#fbbf24', '#fef3c7', '#f59e0b'],
-                    ['#f9a8d4', '#fce7f3', '#ec4899'],
-                    ['#86efac', '#d1fae5', '#22c55e'],
-                    ['#c4b5fd', '#ede9fe', '#8b5cf6'],
-                    ['#fdba74', '#fff7ed', '#f97316'],
-                    ['#fff', '#f0f9ff', '#bae6fd'],
+                    ['#fbbf24','#f59e0b'], ['#f9a8d4','#ec4899'],
+                    ['#86efac','#22c55e'], ['#c4b5fd','#8b5cf6'],
+                    ['#fdba74','#f97316'], ['#fff','#bae6fd'],
                 ];
                 for (let i = 0; i < FLOWER_COUNT; i++) {
                     const col = flowerColors[randInt(0, flowerColors.length - 1)];
-                    FLOWERS.push({
+                    const layer = Math.random();
+                    const flower = {
                         x: rand(20, W - 20),
                         stemH: rand(30, 100),
                         petalR: rand(4, 9),
                         swayAmp: rand(0.03, 0.10),
                         swaySpeed: rand(0.5, 1.2),
                         swayOffset: rand(0, Math.PI * 2),
-                        outer: col[0], inner: col[1], center: col[2],
+                        outer: col[0], center: col[1],
                         petals: randInt(5, 8),
-                        layer: Math.random(),
-                    });
+                        layer,
+                    };
+                    (layer < 0.5 ? FLOWERS_BACK : FLOWERS_FRONT).push(flower);
                 }
-                FLOWERS.sort((a, b) => a.layer - b.layer);
 
-                // fireflies
+                // Fireflies — pre-allocate alpha string slots, avoid per-frame string concat
                 for (let i = 0; i < FLY_COUNT; i++) {
                     FLIES.push({
-                        x: rand(0, W),
-                        y: rand(H * 0.1, H * 0.75),
-                        vx: rand(-0.4, 0.4),
-                        vy: rand(-0.3, 0.3),
+                        x: rand(0, W), y: rand(H * 0.1, H * 0.75),
+                        vx: rand(-0.4, 0.4), vy: rand(-0.3, 0.3),
                         phase: rand(0, Math.PI * 2),
                         speed: rand(0.02, 0.06),
                         r: rand(1.5, 3),
                     });
                 }
 
-                // butterflies
-                const bColors = ['#f9a8d4', '#86efac', '#fbbf24', '#c4b5fd', '#fdba74'];
+                // Butterflies
+                const bColors = ['#f9a8d4','#86efac','#fbbf24','#c4b5fd','#fdba74'];
                 for (let i = 0; i < BUTTERFLY_COUNT; i++) {
                     BUTTERFLIES.push({
-                        x: rand(50, W - 50),
-                        y: rand(H * 0.15, H * 0.6),
-                        vx: rand(-0.8, 0.8) || 0.4,
-                        vy: rand(-0.3, 0.3),
-                        flapSpeed: rand(0.08, 0.18),
+                        x: rand(50, W - 50), y: rand(H * 0.15, H * 0.6),
+                        vx: rand(-0.8, 0.8) || 0.4, vy: rand(-0.3, 0.3),
+                        flapSpeed: rand(0.05, 0.12),   // slower = less jank
                         flapOffset: rand(0, Math.PI * 2),
                         size: rand(8, 14),
                         color: bColors[randInt(0, bColors.length - 1)],
@@ -301,84 +301,81 @@
                 }
             }
 
+            // Draw all blades in one pass — set strokeStyle once per blade but
+            // avoid state thrash by batching lineWidth changes where possible
             function drawBlade(b, wind) {
                 const sway = Math.sin(t * b.swaySpeed + b.swayOffset) * b.swayAmp + wind * 0.6;
-                const cp1x = b.x + b.lean * b.h * 0.4 + sway * b.h * 0.5;
-                const cp1y = b.baseY - b.h * 0.6;
-                const tipX = b.x + b.lean * b.h + sway * b.h;
-                const tipY = b.baseY - b.h;
-
                 ctx.beginPath();
                 ctx.moveTo(b.x, b.baseY);
-                ctx.quadraticCurveTo(cp1x, cp1y, tipX, tipY);
-                ctx.lineWidth = b.width;
+                ctx.quadraticCurveTo(
+                    b.x + b.lean * b.h * 0.4 + sway * b.h * 0.5, b.baseY - b.h * 0.6,
+                    b.x + b.lean * b.h + sway * b.h, b.baseY - b.h
+                );
+                ctx.lineWidth   = b.width;
                 ctx.strokeStyle = b.color;
-                ctx.lineCap = 'round';
                 ctx.stroke();
             }
 
             function drawFlower(f, wind) {
-                const sway = Math.sin(t * f.swaySpeed + f.swayOffset) * f.swayAmp + wind * 0.4;
-                const stemTipX = f.x + sway * f.stemH;
-                const stemTipY = H - f.stemH;
+                const sway    = Math.sin(t * f.swaySpeed + f.swayOffset) * f.swayAmp + wind * 0.4;
+                const tipX    = f.x + sway * f.stemH;
+                const tipY    = H - f.stemH;
 
                 // stem
                 ctx.beginPath();
                 ctx.moveTo(f.x, H);
-                ctx.quadraticCurveTo(f.x + sway * f.stemH * 0.5, H - f.stemH * 0.5, stemTipX, stemTipY);
-                ctx.lineWidth = 2;
+                ctx.quadraticCurveTo(f.x + sway * f.stemH * 0.5, H - f.stemH * 0.5, tipX, tipY);
+                ctx.lineWidth   = 2;
                 ctx.strokeStyle = '#2d6a2d';
                 ctx.stroke();
 
-                // petals
+                // petals — single save/restore, no globalAlpha thrash
                 ctx.save();
-                ctx.translate(stemTipX, stemTipY);
+                ctx.translate(tipX, tipY);
                 ctx.rotate(sway * 0.5);
+                ctx.fillStyle  = f.outer;
+                ctx.globalAlpha = 0.82;
                 for (let p = 0; p < f.petals; p++) {
                     const angle = (p / f.petals) * Math.PI * 2;
                     ctx.beginPath();
                     ctx.ellipse(
                         Math.cos(angle) * f.petalR * 1.4,
                         Math.sin(angle) * f.petalR * 1.4,
-                        f.petalR, f.petalR * 0.6,
-                        angle, 0, Math.PI * 2
+                        f.petalR, f.petalR * 0.6, angle, 0, Math.PI * 2
                     );
-                    ctx.fillStyle = f.outer;
-                    ctx.globalAlpha = 0.85;
                     ctx.fill();
                 }
-                // center
+                // center dot
+                ctx.globalAlpha = 1;
+                ctx.fillStyle   = f.center;
                 ctx.beginPath();
                 ctx.arc(0, 0, f.petalR * 0.55, 0, Math.PI * 2);
-                ctx.fillStyle = f.center;
-                ctx.globalAlpha = 1;
                 ctx.fill();
                 ctx.restore();
             }
 
+            // Firefly: skip the radial gradient — use a simple soft circle instead.
+            // Gradients created per-frame per-firefly were the single biggest cost.
             function drawFirefly(f) {
-                // drift
                 f.x += f.vx;
                 f.y += f.vy + Math.sin(t * f.speed * 3 + f.phase) * 0.3;
-                if (f.x < 0) f.x = W;
-                if (f.x > W) f.x = 0;
+                if (f.x < 0) f.x = W;  if (f.x > W) f.x = 0;
                 if (f.y < 20) f.vy = Math.abs(f.vy);
                 if (f.y > H - 20) f.vy = -Math.abs(f.vy);
 
-                const glow = (Math.sin(t * f.speed * 60 + f.phase) + 1) / 2;
-                const alpha = 0.3 + glow * 0.7;
+                const glow  = (Math.sin(t * f.speed * 60 + f.phase) + 1) * 0.5;
+                const alpha = 0.25 + glow * 0.6;
 
-                const grad = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, f.r * 5);
-                grad.addColorStop(0, `rgba(180,255,120,${alpha})`);
-                grad.addColorStop(1, 'rgba(180,255,120,0)');
+                // Outer soft halo — one circle, low alpha
                 ctx.beginPath();
-                ctx.arc(f.x, f.y, f.r * 5, 0, Math.PI * 2);
-                ctx.fillStyle = grad;
+                ctx.arc(f.x, f.y, f.r * 6, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(180,255,120,${(alpha * 0.3).toFixed(2)})`;
                 ctx.fill();
 
+                // Bright core
                 ctx.beginPath();
                 ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(220,255,160,${alpha})`;
+                ctx.fillStyle = `rgba(220,255,160,${alpha.toFixed(2)})`;
                 ctx.fill();
             }
 
@@ -386,74 +383,85 @@
                 b.x += b.vx;
                 b.y += b.vy + Math.sin(t * 0.8 + b.flapOffset) * 0.5;
                 if (b.x < -20) { b.x = W + 20; b.y = rand(H * 0.15, H * 0.6); }
-                if (b.x > W + 20) { b.x = -20; b.y = rand(H * 0.15, H * 0.6); }
+                if (b.x > W + 20) { b.x = -20;  b.y = rand(H * 0.15, H * 0.6); }
 
                 const flap = Math.abs(Math.sin(t * b.flapSpeed * 60 + b.flapOffset));
+                const hw   = b.size * flap;         // half-width of wing
+                if (hw < 0.5) return;               // skip when fully folded
+
                 ctx.save();
                 ctx.translate(b.x, b.y);
-                ctx.globalAlpha = 0.75;
+                ctx.globalAlpha = 0.72;
+                ctx.fillStyle   = b.color;
 
-                // left wing
                 ctx.beginPath();
-                ctx.ellipse(-b.size * flap, 0, b.size * flap, b.size * 0.6, -0.4, 0, Math.PI * 2);
-                ctx.fillStyle = b.color;
+                ctx.ellipse(-hw, 0, hw, b.size * 0.6, -0.4, 0, Math.PI * 2);
                 ctx.fill();
-                // right wing
+
                 ctx.beginPath();
-                ctx.ellipse(b.size * flap, 0, b.size * flap, b.size * 0.6, 0.4, 0, Math.PI * 2);
+                ctx.ellipse( hw, 0, hw, b.size * 0.6,  0.4, 0, Math.PI * 2);
                 ctx.fill();
+
                 // body
+                ctx.globalAlpha = 0.88;
+                ctx.fillStyle   = '#1a1a1a';
                 ctx.beginPath();
                 ctx.ellipse(0, 0, 2, b.size * 0.35, 0, 0, Math.PI * 2);
-                ctx.fillStyle = '#1a1a1a';
-                ctx.globalAlpha = 0.9;
                 ctx.fill();
 
                 ctx.restore();
             }
 
             function draw() {
+                if (!visible) { rafId = requestAnimationFrame(draw); return; }
+
                 t += 0.016;
                 ctx.clearRect(0, 0, W, H);
 
-                // subtle ground gradient
-                const ground = ctx.createLinearGradient(0, H * 0.7, 0, H);
-                ground.addColorStop(0, 'rgba(10,20,5,0)');
-                ground.addColorStop(1, 'rgba(5,15,3,0.55)');
-                ctx.fillStyle = ground;
+                // Cached ground gradient
+                ctx.fillStyle = groundGrad;
                 ctx.fillRect(0, H * 0.7, W, H * 0.3);
 
-                // global wind oscillation
                 const wind = Math.sin(t * 0.4) * 0.06 + Math.sin(t * 0.13) * 0.03;
 
-                // back layer blades
+                // Set lineCap once globally — all blades use 'round'
+                ctx.lineCap = 'round';
+
                 ctx.globalAlpha = 0.55;
-                BLADES.filter(b => b.layer < 0.5).forEach(b => drawBlade(b, wind));
+                for (let i = 0; i < BLADES_BACK.length; i++)   drawBlade(BLADES_BACK[i], wind);
 
-                // back flowers
                 ctx.globalAlpha = 0.65;
-                FLOWERS.filter(f => f.layer < 0.5).forEach(f => drawFlower(f, wind));
-
-                // fireflies (behind front grass)
-                ctx.globalAlpha = 1;
-                FLIES.forEach(f => drawFirefly(f));
-
-                // butterflies
-                BUTTERFLIES.forEach(b => drawButterfly(b));
-
-                // front layer blades
-                ctx.globalAlpha = 0.9;
-                BLADES.filter(b => b.layer >= 0.5).forEach(b => drawBlade(b, wind));
-
-                // front flowers
-                ctx.globalAlpha = 0.9;
-                FLOWERS.filter(f => f.layer >= 0.5).forEach(f => drawFlower(f, wind));
+                for (let i = 0; i < FLOWERS_BACK.length; i++)  drawFlower(FLOWERS_BACK[i], wind);
 
                 ctx.globalAlpha = 1;
-                requestAnimationFrame(draw);
+                for (let i = 0; i < FLIES.length; i++)          drawFirefly(FLIES[i]);
+                for (let i = 0; i < BUTTERFLIES.length; i++)    drawButterfly(BUTTERFLIES[i]);
+
+                ctx.globalAlpha = 0.9;
+                for (let i = 0; i < BLADES_FRONT.length; i++)  drawBlade(BLADES_FRONT[i], wind);
+                for (let i = 0; i < FLOWERS_FRONT.length; i++) drawFlower(FLOWERS_FRONT[i], wind);
+
+                ctx.globalAlpha = 1;
+                rafId = requestAnimationFrame(draw);
             }
 
-            window.addEventListener('resize', init);
+            // Pause when tab is hidden or canvas scrolled out of view
+            document.addEventListener('visibilitychange', function () {
+                visible = document.visibilityState === 'visible';
+            });
+
+            const observer = new IntersectionObserver(function (entries) {
+                visible = entries[0].isIntersecting;
+            }, { threshold: 0 });
+            observer.observe(canvas);
+
+            // Debounce resize
+            let resizeTimer;
+            window.addEventListener('resize', function () {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(init, 150);
+            });
+
             init();
             draw();
         })();

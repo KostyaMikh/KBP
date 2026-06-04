@@ -44,8 +44,9 @@ body {
 .orb {
     position: absolute;
     border-radius: 50%;
-    filter: blur(120px);
-    opacity: 0.25;
+    filter: blur(80px);
+    opacity: 0.2;
+    will-change: transform;
 }
 
 .orb-1 {
