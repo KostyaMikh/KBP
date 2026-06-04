@@ -731,44 +731,64 @@
   $('dpPushBtn').addEventListener('click', async () => {
     const btn      = $('dpPushBtn');
     const statusEl = $('dpGitStatus');
-    const msg      = $('dpCommitMsg').value.trim() || 'chore: update catalog via dev tools';
+    const commitMsg = $('dpCommitMsg').value.trim() || 'chore: update catalog via dev tools';
 
     btn.classList.add('loading'); btn.disabled = true;
     statusEl.textContent = 'Reading current catalog.html…';
     statusEl.className   = 'dp-git-status';
 
     try {
-      // Fetch current catalog.html via GitHub API to get its SHA
       const filePath = 'catalog.html';
-      const current  = await ghGet(`/repos/${REPO_OWNER}/${REPO_NAME}/contents/${filePath}?ref=${REPO_BRANCH}`);
-      const sha      = current.sha;
 
-      // Get the live DOM HTML
-      const html    = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
-      const encoded = btoa(unescape(encodeURIComponent(html)));
+      // Get SHA of existing file
+      const current = await ghGet(
+        '/repos/' + REPO_OWNER + '/' + REPO_NAME + '/contents/' + filePath + '?ref=' + REPO_BRANCH
+      );
+      const sha = current.sha;
+
+      statusEl.textContent = 'Encoding…';
+
+      // Serialise only the real page HTML, stripping the injected dev panel
+      // so we don't commit devtools UI into the repo
+      const docClone = document.documentElement.cloneNode(true);
+      // Remove dev-tools injected elements from the clone
+      ['devPanel','devBadge','devLoginTrigger','devLogoutBtn',
+       'devAuthModal','devToast','kbpDelOverlay'].forEach(id => {
+        const el = docClone.querySelector('#' + id);
+        if (el) el.remove();
+      });
+      // Remove injected devtools stylesheet link
+      docClone.querySelectorAll('link[href="devtools.css"]').forEach(l => l.remove());
+
+      const html = '<!DOCTYPE html>\n' + docClone.outerHTML;
+
+      // Safe UTF-8 → base64 using TextEncoder (works for all characters)
+      const bytes   = new TextEncoder().encode(html);
+      let binary    = '';
+      bytes.forEach(b => { binary += String.fromCharCode(b); });
+      const encoded = btoa(binary);
 
       statusEl.textContent = 'Pushing…';
 
-      await ghPut(`/repos/${REPO_OWNER}/${REPO_NAME}/contents/${filePath}`, {
-        message: msg,
-        content: encoded,
-        sha,
-        branch: REPO_BRANCH,
-      });
+      await ghPut(
+        '/repos/' + REPO_OWNER + '/' + REPO_NAME + '/contents/' + filePath,
+        { message: commitMsg, content: encoded, sha, branch: REPO_BRANCH }
+      );
 
       statusEl.textContent = '✓ Pushed successfully';
       statusEl.className   = 'dp-git-status ok';
       showToast('Pushed to GitHub ✓', 'success');
     } catch (err) {
-      let msg = err.message;
-      if (msg.includes('403')) {
-        msg = '403: Token needs "repo" scope. Go to github.com/settings/tokens, delete the old token, create a new one with the "repo" checkbox ticked, then log out and log back in.';
+      let errMsg = err.message;
+      if (errMsg.includes('403')) {
+        errMsg = '403: Token needs "repo" scope. Regenerate your token with the repo checkbox ticked, then log out and back in.';
       }
-      statusEl.textContent = '✗ ' + msg;
+      statusEl.textContent = '✗ ' + errMsg;
       statusEl.className   = 'dp-git-status error';
       showToast('Push failed — see Git tab', 'error');
     } finally {
-      btn.classList.remove('loading'); btn.disabled = false;
+      btn.classList.remove('loading');
+      btn.disabled = false;
     }
   });
 
@@ -904,8 +924,13 @@
   // Capture page click when in insert mode
   document.addEventListener('click', e => {
     if (!insertMode) return;
-    // Ignore clicks inside the dev panel itself
-    if (e.target.closest('#devPanel')) return;
+    // Ignore clicks inside the dev panel itself or any fixed UI element
+    if (e.target.closest('#devPanel') ||
+        e.target.closest('#devBadge') ||
+        e.target.closest('#devLogoutBtn') ||
+        e.target.closest('#devAuthModal') ||
+        e.target.closest('#kbpDelOverlay')) return;
+
     e.preventDefault();
     e.stopPropagation();
 
@@ -916,16 +941,16 @@
       return;
     }
 
-    const style   = $('dpTextStyle').value;
-    const html    = buildTextHTML(content, style);
-    const target  = e.target.closest('[class],[id]') || e.target;
+    const style  = $('dpTextStyle').value;
+    const html   = buildTextHTML(content, style);
+    const target = e.target.closest('[class],[id]') || e.target;
 
     target.insertAdjacentHTML('beforebegin', html);
     setInsertMode(false);
     $('dpInsertStatus').textContent = '✓ Inserted!';
     $('dpInsertStatus').className   = 'dp-git-status ok';
     showToast('Element inserted ✓', 'success');
-  }, true); // capture phase so we get it before other handlers
+  }, true); // capture phase
 
   // ── Panel open/close ───────────────────────────────────────────────────────
   function openPanel() {
