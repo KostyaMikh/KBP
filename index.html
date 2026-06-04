@@ -92,6 +92,16 @@
                     <span class="stat-label">Possibilities</span>
                 </div>
             </div>
+
+            <!-- EARLY ACCESS ANNOUNCEMENT -->
+            <div class="glass" style="margin-top:32px;padding:20px 28px;border-radius:16px;border:1px solid rgba(245,158,11,0.35);background:rgba(245,158,11,0.07);display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+                <span style="font-size:1.6rem;">🔓</span>
+                <div style="flex:1;min-width:200px;">
+                    <p style="margin:0 0 4px;font-family:'Orbitron',sans-serif;font-size:0.85rem;font-weight:700;color:#f59e0b;letter-spacing:0.08em;text-transform:uppercase;">New — Early Access</p>
+                    <p style="margin:0;font-size:0.95rem;color:var(--text-muted);line-height:1.5;"><strong style="color:var(--text);">Tkanki Zwierzęce</strong> is now available in Early Access — preview the presentation while it's still being crafted.</p>
+                </div>
+                <a href="catalog.html" class="btn btn-secondary" style="padding:10px 20px;font-size:0.85rem;">Check it out</a>
+            </div>
         </main>
     </div>
 
@@ -152,87 +162,7 @@
         <p class="footer-copy">© 2025 KBP — Kostya's Best Presentations</p>
     </footer>
 
-    <!-- LIVE PRESENTATION -->
-    <div class="live-presentation-section"
-        style="max-width:1200px;margin:0 auto;padding:0 24px 60px;position:relative;overflow:hidden;">
-        <!-- Animated likes floating up -->
-        <div id="liveLikesContainer"
-            style="position:absolute;bottom:0;left:0;width:100%;height:100px;pointer-events:none;z-index:1;"></div>
-
-        <div class="live-card glass"
-            style="border-radius:18px;overflow:hidden;position:relative;transition:all 0.35s;border:1px solid rgba(255,0,0,0.3);box-shadow:0 0 40px rgba(255,0,0,0.15);z-index:2;">
-            <div class="card-glow"
-                style="position:absolute;top:-60px;right:-60px;width:180px;height:180px;background:radial-gradient(circle,rgba(255,0,0,0.2),transparent 70%);pointer-events:none;opacity:0.7;">
-            </div>
-
-            <div style="display:flex;flex-direction:column;gap:0;">
-                <!-- Thumbnail -->
-                <a href="https://canva.link/ouliflvoxxuj2u3" target="_blank"
-                    style="display:block;text-decoration:none;">
-                    <div style="position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;background:#111118;">
-                        <img src="thumbnails/live.jpg" alt="LIVE PRESENTATION!"
-                            onerror="this.src='thumbnails/no_thumbnail.jpg'"
-                            style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s ease;">
-                        <div
-                            style="position:absolute;inset:0;background:rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.3s ease;">
-                            <span
-                                style="width:52px;height:52px;background:linear-gradient(135deg,#ff0000,#ff4444);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(255,0,0,0.6);transform:scale(0.8);transition:transform 0.3s ease;">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    style="width:22px;height:22px;color:white;">
-                                    <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
-                                    <polyline points="15 3 21 3 21 9" />
-                                    <line x1="10" y1="14" x2="21" y2="3" />
-                                </svg>
-                            </span>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- Card Body -->
-                <div style="padding:24px 28px 28px;display:flex;flex-direction:column;gap:12px;">
-                    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-                        <span
-                            style="padding:4px 14px;border-radius:50px;font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;background:rgba(255,0,0,0.15);border:1px solid rgba(255,0,0,0.3);color:#ff4444;animation:pulseLive 2s ease-in-out infinite;">🔴
-                            LIVE</span>
-                        <span style="font-size:0.75rem;color:rgba(240,240,245,0.5);font-weight:500;">Interactive &
-                            Collaborative</span>
-                    </div>
-
-                    <h3
-                        style="font-family:'Orbitron',sans-serif;font-size:1.3rem;font-weight:700;line-height:1.3;color:var(--text);margin:0;">
-                        LIVE PRESENTATION!</h3>
-
-                    <p style="font-size:0.95rem;color:var(--text-muted);line-height:1.6;margin:0;">A presentation
-                        everyone can edit and have fun together! Join the collaborative canvas and add your own slides,
-                        drawings, or ideas in real-time.</p>
-
-                    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:4px;">
-                        <a href="https://canva.link/ouliflvoxxuj2u3" target="_blank"
-                            style="display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:10px;background:linear-gradient(135deg,#ff0000,#ff4444);color:white;text-decoration:none;font-size:0.9rem;font-weight:600;transition:all 0.25s;box-shadow:0 4px 16px rgba(255,0,0,0.4);">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                style="width:14px;height:14px;">
-                                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
-                                <polyline points="15 3 21 3 21 9" />
-                                <line x1="10" y1="14" x2="21" y2="3" />
-                            </svg>
-                            Join Live Session
-                        </a>
-                        <span
-                            style="display:inline-flex;align-items:center;gap:6px;padding:10px 18px;border-radius:8px;background:rgba(255,0,0,0.08);border:1px solid rgba(255,0,0,0.2);color:rgba(255,0,0,0.7);font-size:0.8rem;font-weight:600;cursor:default;">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                style="width:12px;height:12px;">
-                                <circle cx="12" cy="12" r="10" />
-                                <polyline points="12 6 12 12 16 14" />
-                            </svg>
-                            Real-time editing
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- NATURE SCENE -->
+    <script src="loader.js"></script>
     <div class="nature-wrap">
         <div class="nature-coming-badge">
             <span class="bio-coming-badge">🌿 Biology Presentations — Coming Soon</span>
