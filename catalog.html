@@ -1,35 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
+<html lang="en" style="--orange: #ff5e1a; --orange-light: #ff8c42; --red: #e63000; --bg: #080810; --text: #f0f0f5;"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catalog — KBP</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="styles.css">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap"
-        rel="stylesheet">
-</head>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="devtools.css"></head>
 
-<body>
+<body cz-shortcut-listen="true">
 
     <!-- LOADING SCREEN -->
-    <div class="loader" id="loader">
-        <div class="loader-bg">
-            <div class="loader-orb loader-orb-1"></div>
-            <div class="loader-orb loader-orb-2"></div>
-        </div>
-        <div class="loader-content">
-            <div class="loader-logo">
-                <img src="logo.png" alt="KBP" onerror="this.src='logo.svg'">
-            </div>
-            <p class="loader-sub">Kostya's Best Presentations</p>
-            <div class="loader-bar-wrap">
-                <div class="loader-bar" id="loaderBar"></div>
-            </div>
-        </div>
-    </div>
+    
 
     <div class="bg-orbs">
         <div class="orb orb-1"></div>
@@ -41,7 +23,7 @@
     <div class="container">
         <header class="glass-header">
             <a href="index.html" class="logo-wrap">
-                <img src="logo.png" alt="KBP" class="logo" onerror="this.src='logo.svg'">
+                <img src="logo.svg" alt="KBP" class="logo" onerror="this.src='logo.svg'">
             </a>
             <nav>
                 <a href="index.html" class="nav-link">Home</a>
@@ -66,21 +48,46 @@
             </div>
 
             <div class="catalog-grid" id="catalogGrid">
+      <div class="pres-card glass" data-lang="polski" data-id="custom-1780587756092">
+        <div class="card-glow"></div>
+        <a href="#" target="_blank" class="card-thumb-link">
+          <div class="card-thumb">
+            <img src="thumbnails/no_thumbnail.jpg" alt="Gąbki i parzydełkowce" onerror="this.src='thumbnails/no_thumbnail.jpg'">
+            <div class="thumb-overlay">
+              <span class="thumb-play">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+              </span>
+            </div>
+          </div>
+        </a>
+        <div class="card-body">
+          <div class="card-top">
+            <span class="lang-badge polski">Polski</span>
+            <span class="theme-tag">Biologia</span>
+          </div>
+          <h3 class="card-title">Gąbki i parzydełkowce</h3>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:2px;">
+            <span class="card-btn coming-soon-btn">⏳ Wkrótce dostępne</span>
+          </div>
+        </div>
+      </div>
 
                 <!-- Coming Soon - Tkanki zwierzęce - Polski -->
                 <div class="pres-card glass coming-soon-card" data-lang="polski" data-id="tkanki">
                     <div class="card-glow"></div>
-                    <a href="https://www.canva.com/design/DAHLJnj12Vg/cBDGoIE9Pmr2mizU1TOsCg/edit" target="_blank"
-                        class="card-thumb-link">
+                    <a href="https://www.canva.com/design/DAHLJnj12Vg/cBDGoIE9Pmr2mizU1TOsCg/edit" target="_blank" class="card-thumb-link">
                         <div class="card-thumb">
-                            <img src="thumbnails/tkanki_zwierzence.jpg" alt="Tkanki Zwierzęce"
-                                onerror="this.src='thumbnails/no_thumbnail.jpg'">
+                            <img src="thumbnails/tkanki_zwierzence.jpg" alt="Tkanki Zwierzęce" onerror="this.src='thumbnails/no_thumbnail.jpg'">
                             <div class="thumb-overlay">
                                 <span class="thumb-play">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
-                                        <polyline points="15 3 21 3 21 9" />
-                                        <line x1="10" y1="14" x2="21" y2="3" />
+                                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                                        <polyline points="15 3 21 3 21 9"></polyline>
+                                        <line x1="10" y1="14" x2="21" y2="3"></line>
                                     </svg>
                                 </span>
                             </div>
@@ -94,14 +101,10 @@
                         <h3 class="card-title">Tkanki Zwierzęce</h3>
                         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:2px;">
                             <span class="card-btn coming-soon-btn" style="background:linear-gradient(135deg,#f59e0b,#d97706);border:none;cursor:default;">🔓 Early Access</span>
-                            <a href="https://www.canva.com/design/DAHLJnj12Vg/cBDGoIE9Pmr2mizU1TOsCg/edit"
-                                target="_blank" class="card-btn"
-                                style="background:linear-gradient(135deg,#8b5cf6,#6d28d9);">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    style="width:13px;height:13px">
-                                    <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                    <path
-                                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            <a href="https://www.canva.com/design/DAHLJnj12Vg/cBDGoIE9Pmr2mizU1TOsCg/edit" target="_blank" class="card-btn" style="background:linear-gradient(135deg,#8b5cf6,#6d28d9);">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px">
+                                    <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                                 </svg>
                                 Preview Presentation
                             </a>
@@ -114,14 +117,13 @@
                     <div class="card-glow"></div>
                     <a href="https://canva.link/jdr4lco27nu2r5b" target="_blank" class="card-thumb-link">
                         <div class="card-thumb">
-                            <img src="thumbnails/sentinelczycy.jpg" alt="Sentinelczycy"
-                                onerror="this.src='thumbnails/no_thumbnail.jpg'">
+                            <img src="thumbnails/sentinelczycy.jpg" alt="Sentinelczycy" onerror="this.src='thumbnails/no_thumbnail.jpg'">
                             <div class="thumb-overlay">
                                 <span class="thumb-play">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
-                                        <polyline points="15 3 21 3 21 9" />
-                                        <line x1="10" y1="14" x2="21" y2="3" />
+                                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                                        <polyline points="15 3 21 3 21 9"></polyline>
+                                        <line x1="10" y1="14" x2="21" y2="3"></line>
                                     </svg>
                                 </span>
                             </div>
@@ -135,9 +137,9 @@
                         <h3 class="card-title">Sentinelczycy</h3>
                         <a href="https://canva.link/jdr4lco27nu2r5b" target="_blank" class="card-btn">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
-                                <polyline points="15 3 21 3 21 9" />
-                                <line x1="10" y1="14" x2="21" y2="3" />
+                                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                                <polyline points="15 3 21 3 21 9"></polyline>
+                                <line x1="10" y1="14" x2="21" y2="3"></line>
                             </svg>
                             View Presentation
                         </a>
@@ -149,14 +151,13 @@
                     <div class="card-glow"></div>
                     <a href="https://canva.link/hdb6jztrh3bsevd" target="_blank" class="card-thumb-link">
                         <div class="card-thumb">
-                            <img src="thumbnails/taiga.jpg" alt="Biom Taiga"
-                                onerror="this.src='thumbnails/no_thumbnail.jpg'">
+                            <img src="thumbnails/taiga.jpg" alt="Biom Taiga" onerror="this.src='thumbnails/no_thumbnail.jpg'">
                             <div class="thumb-overlay">
                                 <span class="thumb-play">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
-                                        <polyline points="15 3 21 3 21 9" />
-                                        <line x1="10" y1="14" x2="21" y2="3" />
+                                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                                        <polyline points="15 3 21 3 21 9"></polyline>
+                                        <line x1="10" y1="14" x2="21" y2="3"></line>
                                     </svg>
                                 </span>
                             </div>
@@ -165,14 +166,14 @@
                     <div class="card-body">
                         <div class="card-top">
                             <span class="lang-badge polski">Polski</span>
-                            <span class="theme-tag">Nature & Ecology</span>
+                            <span class="theme-tag">Nature &amp; Ecology</span>
                         </div>
                         <h3 class="card-title">Biom Taiga</h3>
                         <a href="https://canva.link/hdb6jztrh3bsevd" target="_blank" class="card-btn">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
-                                <polyline points="15 3 21 3 21 9" />
-                                <line x1="10" y1="14" x2="21" y2="3" />
+                                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                                <polyline points="15 3 21 3 21 9"></polyline>
+                                <line x1="10" y1="14" x2="21" y2="3"></line>
                             </svg>
                             View Presentation
                         </a>
@@ -184,14 +185,13 @@
                     <div class="card-glow"></div>
                     <a href="https://canva.link/7svyfcwnnusc0qz" target="_blank" class="card-thumb-link">
                         <div class="card-thumb">
-                            <img src="thumbnails/czekolada.jpg" alt="Czekolada"
-                                onerror="this.src='thumbnails/no_thumbnail.jpg'">
+                            <img src="thumbnails/czekolada.jpg" alt="Czekolada" onerror="this.src='thumbnails/no_thumbnail.jpg'">
                             <div class="thumb-overlay">
                                 <span class="thumb-play">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
-                                        <polyline points="15 3 21 3 21 9" />
-                                        <line x1="10" y1="14" x2="21" y2="3" />
+                                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                                        <polyline points="15 3 21 3 21 9"></polyline>
+                                        <line x1="10" y1="14" x2="21" y2="3"></line>
                                     </svg>
                                 </span>
                             </div>
@@ -200,14 +200,14 @@
                     <div class="card-body">
                         <div class="card-top">
                             <span class="lang-badge polski">Polski</span>
-                            <span class="theme-tag">Food & Culture</span>
+                            <span class="theme-tag">Food &amp; Culture</span>
                         </div>
                         <h3 class="card-title">Czekolada</h3>
                         <a href="https://canva.link/7svyfcwnnusc0qz" target="_blank" class="card-btn">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
-                                <polyline points="15 3 21 3 21 9" />
-                                <line x1="10" y1="14" x2="21" y2="3" />
+                                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                                <polyline points="15 3 21 3 21 9"></polyline>
+                                <line x1="10" y1="14" x2="21" y2="3"></line>
                             </svg>
                             View Presentation
                         </a>
@@ -219,14 +219,13 @@
                     <div class="card-glow"></div>
                     <a href="https://canva.link/992vc9cyxr82lym" target="_blank" class="card-thumb-link">
                         <div class="card-thumb">
-                            <img src="thumbnails/pompeii.jpg" alt="The Pompeii Book"
-                                onerror="this.src='thumbnails/no_thumbnail.jpg'">
+                            <img src="thumbnails/pompeii.jpg" alt="The Pompeii Book" onerror="this.src='thumbnails/no_thumbnail.jpg'">
                             <div class="thumb-overlay">
                                 <span class="thumb-play">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
-                                        <polyline points="15 3 21 3 21 9" />
-                                        <line x1="10" y1="14" x2="21" y2="3" />
+                                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                                        <polyline points="15 3 21 3 21 9"></polyline>
+                                        <line x1="10" y1="14" x2="21" y2="3"></line>
                                     </svg>
                                 </span>
                             </div>
@@ -235,14 +234,14 @@
                     <div class="card-body">
                         <div class="card-top">
                             <span class="lang-badge english">English</span>
-                            <span class="theme-tag">History & Archaeology</span>
+                            <span class="theme-tag">History &amp; Archaeology</span>
                         </div>
                         <h3 class="card-title">The Pompeii Book</h3>
                         <a href="https://canva.link/992vc9cyxr82lym" target="_blank" class="card-btn">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
-                                <polyline points="15 3 21 3 21 9" />
-                                <line x1="10" y1="14" x2="21" y2="3" />
+                                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                                <polyline points="15 3 21 3 21 9"></polyline>
+                                <line x1="10" y1="14" x2="21" y2="3"></line>
                             </svg>
                             View Presentation
                         </a>
@@ -254,14 +253,13 @@
                     <div class="card-glow"></div>
                     <a href="https://canva.link/8qope4dji9gdlad" target="_blank" class="card-thumb-link">
                         <div class="card-thumb">
-                            <img src="thumbnails/preguntas.jpg" alt="15 Preguntas"
-                                onerror="this.src='thumbnails/no_thumbnail.jpg'">
+                            <img src="thumbnails/preguntas.jpg" alt="15 Preguntas" onerror="this.src='thumbnails/no_thumbnail.jpg'">
                             <div class="thumb-overlay">
                                 <span class="thumb-play">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
-                                        <polyline points="15 3 21 3 21 9" />
-                                        <line x1="10" y1="14" x2="21" y2="3" />
+                                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                                        <polyline points="15 3 21 3 21 9"></polyline>
+                                        <line x1="10" y1="14" x2="21" y2="3"></line>
                                     </svg>
                                 </span>
                             </div>
@@ -270,14 +268,14 @@
                     <div class="card-body">
                         <div class="card-top">
                             <span class="lang-badge espanol">Español</span>
-                            <span class="theme-tag">Quiz & Interactive</span>
+                            <span class="theme-tag">Quiz &amp; Interactive</span>
                         </div>
                         <h3 class="card-title">15 Preguntas</h3>
                         <a href="https://canva.link/8qope4dji9gdlad" target="_blank" class="card-btn">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
-                                <polyline points="15 3 21 3 21 9" />
-                                <line x1="10" y1="14" x2="21" y2="3" />
+                                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                                <polyline points="15 3 21 3 21 9"></polyline>
+                                <line x1="10" y1="14" x2="21" y2="3"></line>
                             </svg>
                             View Presentation
                         </a>
@@ -289,14 +287,13 @@
                     <div class="card-glow"></div>
                     <a href="https://canva.link/0xmag7j2fdahhtu" target="_blank" class="card-thumb-link">
                         <div class="card-thumb">
-                            <img src="thumbnails/prometeusz.jpg" alt="Współczesny Prometeusz"
-                                onerror="this.src='thumbnails/no_thumbnail.jpg'">
+                            <img src="thumbnails/prometeusz.jpg" alt="Współczesny Prometeusz" onerror="this.src='thumbnails/no_thumbnail.jpg'">
                             <div class="thumb-overlay">
                                 <span class="thumb-play">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
-                                        <polyline points="15 3 21 3 21 9" />
-                                        <line x1="10" y1="14" x2="21" y2="3" />
+                                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                                        <polyline points="15 3 21 3 21 9"></polyline>
+                                        <line x1="10" y1="14" x2="21" y2="3"></line>
                                     </svg>
                                 </span>
                             </div>
@@ -305,14 +302,14 @@
                     <div class="card-body">
                         <div class="card-top">
                             <span class="lang-badge polski">Polski</span>
-                            <span class="theme-tag">Literature & Mythology</span>
+                            <span class="theme-tag">Literature &amp; Mythology</span>
                         </div>
                         <h3 class="card-title">Współczesny Prometeusz</h3>
                         <a href="https://canva.link/0xmag7j2fdahhtu" target="_blank" class="card-btn">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
-                                <polyline points="15 3 21 3 21 9" />
-                                <line x1="10" y1="14" x2="21" y2="3" />
+                                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                                <polyline points="15 3 21 3 21 9"></polyline>
+                                <line x1="10" y1="14" x2="21" y2="3"></line>
                             </svg>
                             View Presentation
                         </a>
@@ -324,14 +321,13 @@
                     <div class="card-glow"></div>
                     <a href="https://canva.link/foiyt8byrmnwzso" target="_blank" class="card-thumb-link">
                         <div class="card-thumb">
-                            <img src="thumbnails/jurassic.jpg" alt="Jurassic Park Book Review"
-                                onerror="this.src='thumbnails/no_thumbnail.jpg'">
+                            <img src="thumbnails/jurassic.jpg" alt="Jurassic Park Book Review" onerror="this.src='thumbnails/no_thumbnail.jpg'">
                             <div class="thumb-overlay">
                                 <span class="thumb-play">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
-                                        <polyline points="15 3 21 3 21 9" />
-                                        <line x1="10" y1="14" x2="21" y2="3" />
+                                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                                        <polyline points="15 3 21 3 21 9"></polyline>
+                                        <line x1="10" y1="14" x2="21" y2="3"></line>
                                     </svg>
                                 </span>
                             </div>
@@ -340,14 +336,14 @@
                     <div class="card-body">
                         <div class="card-top">
                             <span class="lang-badge english">English</span>
-                            <span class="theme-tag">Literature & Science</span>
+                            <span class="theme-tag">Literature &amp; Science</span>
                         </div>
                         <h3 class="card-title">Jurassic Park — Book Review</h3>
                         <a href="https://canva.link/foiyt8byrmnwzso" target="_blank" class="card-btn">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
-                                <polyline points="15 3 21 3 21 9" />
-                                <line x1="10" y1="14" x2="21" y2="3" />
+                                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                                <polyline points="15 3 21 3 21 9"></polyline>
+                                <line x1="10" y1="14" x2="21" y2="3"></line>
                             </svg>
                             View Presentation
                         </a>
@@ -365,7 +361,302 @@
 
     <script src="loader.js"></script>
     <script src="devtools.js"></script>
-    <script src="catalog.js"></script>
-</body>
 
-</html>
+    <!-- Toast -->
+    <div id="devToast" class="success">Card published ✓</div>
+
+    <!-- Hidden lock trigger -->
+    <button id="devLoginTrigger" aria-label="Developer login" style="display: none;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+      </svg>
+    </button>
+
+    <!-- Dev mode badge (visible when logged in) -->
+    <button id="devBadge" style="display: flex;"><span class="dev-dot"></span> Dev Mode</button>
+    <button class="dev-logout-btn" id="devLogoutBtn">Logout</button>
+
+    <!-- Auth modal -->
+    <div id="devAuthModal" role="dialog" aria-modal="true" aria-labelledby="devModalTitle">
+      <div class="dev-modal-box">
+        <button class="dev-modal-close" id="devModalClose" aria-label="Close">×</button>
+        <div class="dev-modal-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="40" height="40">
+            <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387
+              .599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416
+              -.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729
+              1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997
+              .107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931
+              0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176
+              0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803
+              c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23
+              .653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221
+              0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293
+              c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12
+              c0-6.627-5.373-12-12-12z"></path>
+          </svg>
+        </div>
+        <p class="dev-modal-title" id="devModalTitle">Developer Access</p>
+        <p class="dev-modal-sub">
+          Enter a GitHub Personal Access Token.<br>
+          Only <strong style="color:rgba(240,240,245,.75)">KostyaMikh</strong> can log in.
+        </p>
+        <label class="dev-form-label" for="devTokenInput">GitHub Token</label>
+        <input type="password" id="devTokenInput" class="dev-token-input" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off" spellcheck="false">
+        <p class="dev-hint">
+          Create one at
+          <a href="https://github.com/settings/tokens/new?scopes=repo,read:user&amp;description=KBP+Dev+Tools" target="_blank" rel="noopener">
+            GitHub → Settings → Tokens (classic)
+          </a>. Needs <code>repo</code> + <code>read:user</code> scopes.
+        </p>
+        <button class="dev-login-btn" id="devLoginBtn">
+          <span class="btn-spinner"></span>
+          <span class="btn-text">Verify &amp; Login</span>
+        </button>
+        <p class="dev-auth-msg" id="devAuthMsg"></p>
+      </div>
+    </div>
+
+    <!-- Dev panel -->
+    <div id="devPanel" role="complementary" aria-label="Developer tools" class="open">
+      <div class="dp-header">
+        <span class="dp-title">🛠 Dev Tools</span>
+        <button class="dp-close" id="dpClose" aria-label="Close">×</button>
+      </div>
+      <div class="dp-tabs" id="dpTabs">
+        <button class="dp-tab" data-tab="colors">🎨 Theme</button>
+        <button class="dp-tab" data-tab="manager">🖼 Cards</button>
+        <button class="dp-tab" data-tab="new">➕ New</button>
+        <button class="dp-tab active" data-tab="git">🚀 Git</button>
+      </div>
+      <div class="dp-body">
+
+        <!-- THEME TAB -->
+        <div class="dp-pane" id="dpPane-colors">
+          <p class="dp-section-title">Site Colours — live preview as you pick</p>
+          <div id="dpColorRows">
+        <div class="dp-color-row">
+          <span class="dp-color-label">Primary Orange</span>
+          <div class="dp-color-swatch">
+            <button class="dp-reset-color" data-var="--orange" title="Reset">↺</button>
+            <span class="dp-color-value" id="dpVal-orange">#ff5e1a</span>
+            <div class="dp-color-preview" id="dpPrev-orange" style="background:#ff5e1a"></div>
+            <input type="color" class="dp-color-picker" id="dpPick-orange" value="#ff5e1a">
+          </div>
+        </div>
+        <div class="dp-color-row">
+          <span class="dp-color-label">Light Orange</span>
+          <div class="dp-color-swatch">
+            <button class="dp-reset-color" data-var="--orange-light" title="Reset">↺</button>
+            <span class="dp-color-value" id="dpVal-orange-light">#ff8c42</span>
+            <div class="dp-color-preview" id="dpPrev-orange-light" style="background:#ff8c42"></div>
+            <input type="color" class="dp-color-picker" id="dpPick-orange-light" value="#ff8c42">
+          </div>
+        </div>
+        <div class="dp-color-row">
+          <span class="dp-color-label">Red</span>
+          <div class="dp-color-swatch">
+            <button class="dp-reset-color" data-var="--red" title="Reset">↺</button>
+            <span class="dp-color-value" id="dpVal-red">#e63000</span>
+            <div class="dp-color-preview" id="dpPrev-red" style="background:#e63000"></div>
+            <input type="color" class="dp-color-picker" id="dpPick-red" value="#e63000">
+          </div>
+        </div>
+        <div class="dp-color-row">
+          <span class="dp-color-label">Background</span>
+          <div class="dp-color-swatch">
+            <button class="dp-reset-color" data-var="--bg" title="Reset">↺</button>
+            <span class="dp-color-value" id="dpVal-bg">#080810</span>
+            <div class="dp-color-preview" id="dpPrev-bg" style="background:#080810"></div>
+            <input type="color" class="dp-color-picker" id="dpPick-bg" value="#080810">
+          </div>
+        </div>
+        <div class="dp-color-row">
+          <span class="dp-color-label">Text</span>
+          <div class="dp-color-swatch">
+            <button class="dp-reset-color" data-var="--text" title="Reset">↺</button>
+            <span class="dp-color-value" id="dpVal-text">#f0f0f5</span>
+            <div class="dp-color-preview" id="dpPrev-text" style="background:#f0f0f5"></div>
+            <input type="color" class="dp-color-picker" id="dpPick-text" value="#f0f0f5">
+          </div>
+        </div></div>
+          <button class="dp-save-btn" id="dpSaveColors">
+            <span class="btn-text">Save Colors</span>
+          </button>
+          <button class="dp-save-btn secondary" id="dpResetColors">Reset to Defaults</button>
+        </div>
+
+        <!-- MANAGER TAB -->
+        <div class="dp-pane" id="dpPane-manager">
+          <p class="dp-section-title">Drag to reorder · click 🖼 to replace thumbnail</p>
+          <div class="dp-card-list" id="dpCardList"><div class="dp-card-item" draggable="true" data-id="custom-1780587756092">
+        <span class="dp-drag-handle">⠿</span>
+        <img class="dp-card-thumb" src="https://kostyamikh.github.io/KBP/thumbnails/no_thumbnail.jpg" alt="" onerror="this.src='thumbnails/no_thumbnail.jpg'">
+        <div class="dp-card-info">
+          <div class="dp-card-name">Gąbki i parzydełkowce</div>
+          <div class="dp-card-lang">polski</div>
+        </div>
+        <button class="dp-thumb-btn">🖼 Replace</button></div><div class="dp-card-item" draggable="true" data-id="tkanki">
+        <span class="dp-drag-handle">⠿</span>
+        <img class="dp-card-thumb" src="https://kostyamikh.github.io/KBP/thumbnails/tkanki_zwierzence.jpg" alt="" onerror="this.src='thumbnails/no_thumbnail.jpg'">
+        <div class="dp-card-info">
+          <div class="dp-card-name">Tkanki Zwierzęce</div>
+          <div class="dp-card-lang">polski</div>
+        </div>
+        <button class="dp-thumb-btn">🖼 Replace</button></div><div class="dp-card-item" draggable="true" data-id="sentinelczycy">
+        <span class="dp-drag-handle">⠿</span>
+        <img class="dp-card-thumb" src="https://kostyamikh.github.io/KBP/thumbnails/sentinelczycy.jpg" alt="" onerror="this.src='thumbnails/no_thumbnail.jpg'">
+        <div class="dp-card-info">
+          <div class="dp-card-name">Sentinelczycy</div>
+          <div class="dp-card-lang">polski</div>
+        </div>
+        <button class="dp-thumb-btn">🖼 Replace</button></div><div class="dp-card-item" draggable="true" data-id="taiga">
+        <span class="dp-drag-handle">⠿</span>
+        <img class="dp-card-thumb" src="https://kostyamikh.github.io/KBP/thumbnails/taiga.jpg" alt="" onerror="this.src='thumbnails/no_thumbnail.jpg'">
+        <div class="dp-card-info">
+          <div class="dp-card-name">Biom Taiga</div>
+          <div class="dp-card-lang">polski</div>
+        </div>
+        <button class="dp-thumb-btn">🖼 Replace</button></div><div class="dp-card-item" draggable="true" data-id="czekolada">
+        <span class="dp-drag-handle">⠿</span>
+        <img class="dp-card-thumb" src="https://kostyamikh.github.io/KBP/thumbnails/czekolada.jpg" alt="" onerror="this.src='thumbnails/no_thumbnail.jpg'">
+        <div class="dp-card-info">
+          <div class="dp-card-name">Czekolada</div>
+          <div class="dp-card-lang">polski</div>
+        </div>
+        <button class="dp-thumb-btn">🖼 Replace</button></div><div class="dp-card-item" draggable="true" data-id="pompeii">
+        <span class="dp-drag-handle">⠿</span>
+        <img class="dp-card-thumb" src="https://kostyamikh.github.io/KBP/thumbnails/pompeii.jpg" alt="" onerror="this.src='thumbnails/no_thumbnail.jpg'">
+        <div class="dp-card-info">
+          <div class="dp-card-name">The Pompeii Book</div>
+          <div class="dp-card-lang">english</div>
+        </div>
+        <button class="dp-thumb-btn">🖼 Replace</button></div><div class="dp-card-item" draggable="true" data-id="preguntas">
+        <span class="dp-drag-handle">⠿</span>
+        <img class="dp-card-thumb" src="https://kostyamikh.github.io/KBP/thumbnails/preguntas.jpg" alt="" onerror="this.src='thumbnails/no_thumbnail.jpg'">
+        <div class="dp-card-info">
+          <div class="dp-card-name">15 Preguntas</div>
+          <div class="dp-card-lang">espanol</div>
+        </div>
+        <button class="dp-thumb-btn">🖼 Replace</button></div><div class="dp-card-item" draggable="true" data-id="prometeusz">
+        <span class="dp-drag-handle">⠿</span>
+        <img class="dp-card-thumb" src="https://kostyamikh.github.io/KBP/thumbnails/prometeusz.jpg" alt="" onerror="this.src='thumbnails/no_thumbnail.jpg'">
+        <div class="dp-card-info">
+          <div class="dp-card-name">Współczesny Prometeusz</div>
+          <div class="dp-card-lang">polski</div>
+        </div>
+        <button class="dp-thumb-btn">🖼 Replace</button></div><div class="dp-card-item" draggable="true" data-id="jurassic">
+        <span class="dp-drag-handle">⠿</span>
+        <img class="dp-card-thumb" src="https://kostyamikh.github.io/KBP/thumbnails/jurassic.jpg" alt="" onerror="this.src='thumbnails/no_thumbnail.jpg'">
+        <div class="dp-card-info">
+          <div class="dp-card-name">Jurassic Park — Book Review</div>
+          <div class="dp-card-lang">english</div>
+        </div>
+        <button class="dp-thumb-btn">🖼 Replace</button></div></div>
+          <button class="dp-save-btn" id="dpSaveOrder" style="margin-top:14px">Save Order</button>
+        </div>
+
+        <!-- NEW CARD TAB -->
+        <div class="dp-pane" id="dpPane-new">
+          <p class="dp-section-title">New Presentation Card</p>
+
+          <div class="dp-field">
+            <label>Title</label>
+            <input type="text" id="dpNewTitle" placeholder="e.g. Jurassic Park">
+          </div>
+          <div class="dp-field">
+            <label>Theme / Subject</label>
+            <input type="text" id="dpNewTheme" placeholder="e.g. Literature &amp; Science">
+          </div>
+          <div class="dp-field">
+            <label>Language</label>
+            <select id="dpNewLang">
+              <option value="polski">Polski</option>
+              <option value="english">English</option>
+              <option value="espanol">Español</option>
+            </select>
+          </div>
+
+          <div class="dp-field">
+            <label>Thumbnail</label>
+            <div class="dp-upload-area" id="dpNewThumbArea">
+              📁 Click or drop an image here
+              <img id="dpNewThumbPreview" class="dp-upload-preview" alt="preview" style="display: none;">
+            </div>
+            <input type="file" id="dpNewThumbFile" accept="image/*" style="display:none">
+            <input type="url" id="dpNewThumbUrl" placeholder="…or paste image URL" style="margin-top:5px">
+          </div>
+
+          <div class="dp-field">
+            <label>Status</label>
+            <div class="dp-status-row" id="dpStatusRow">
+              <span class="dp-status-chip available" data-status="available">✅ Available</span>
+              <span class="dp-status-chip early" data-status="early">🔓 Early Access</span>
+              <span class="dp-status-chip coming selected" data-status="coming">⏳ Coming Soon</span>
+            </div>
+          </div>
+
+          <hr class="dp-divider">
+          <p class="dp-section-title">Buttons</p>
+          <div id="dpBtnList">
+        <div class="dp-btn-entry">
+          <input type="text" placeholder="Button label" value="View Presentation" data-i="0" data-field="label">
+          <input type="url" placeholder="https://…" value="" data-i="0" data-field="url">
+          <button class="dp-remove-btn" data-i="0">✕</button>
+        </div></div>
+          <button class="dp-add-btn-link" id="dpAddBtn">+ Add button</button>
+
+          <hr class="dp-divider">
+          <button class="dp-save-btn" id="dpPublishCard">
+            <span class="btn-text">Publish Card</span>
+          </button>
+        </div>
+
+        <!-- GIT TAB -->
+        <div class="dp-pane active" id="dpPane-git">
+          <p class="dp-section-title">Push changes to GitHub</p>
+          <p style="font-size:.78rem;color:rgba(240,240,245,.4);line-height:1.6;margin-bottom:14px">
+            This will commit and push the current
+            <code style="color:#ff8c42">catalog.html</code> to
+            <strong style="color:rgba(240,240,245,.6)">KostyaMikh/KBP</strong>
+            on branch <strong style="color:rgba(240,240,245,.6)">main</strong>.
+          </p>
+          <div class="dp-field">
+            <label>Commit message</label>
+            <input type="text" id="dpCommitMsg" value="chore: update catalog via dev tools">
+          </div>
+          <button class="dp-save-btn green loading" id="dpPushBtn" disabled="">
+            <span class="btn-spinner"></span>
+            <span class="btn-text">🚀 Commit &amp; Push</span>
+          </button>
+          <p class="dp-git-status" id="dpGitStatus">Reading current catalog.html…</p>
+
+          <hr class="dp-divider">
+          <p class="dp-section-title">Upload thumbnail to repo</p>
+          <div class="dp-field">
+            <label>File name (e.g. my_pres.jpg)</label>
+            <input type="text" id="dpUploadName" placeholder="thumbnails/my_pres.jpg">
+          </div>
+          <div class="dp-field">
+            <label>Image file</label>
+            <div class="dp-upload-area" id="dpUploadArea">
+              📁 Click or drop image here
+              <img id="dpUploadPreview" class="dp-upload-preview" alt="preview">
+            </div>
+            <input type="file" id="dpUploadFile" accept="image/*" style="display:none">
+          </div>
+          <button class="dp-save-btn" id="dpUploadBtn">
+            <span class="btn-spinner"></span>
+            <span class="btn-text">Upload Image to Repo</span>
+          </button>
+          <p class="dp-git-status" id="dpUploadStatus"></p>
+        </div>
+
+      </div>
+    </div>
+  
+    <script src="catalog.js"></script>
+
+
+<input type="file" accept="image/*" style="display: none;"><input type="file" accept="image/*" style="display: none;"><input type="file" accept="image/*" style="display: none;"><input type="file" accept="image/*" style="display: none;"><input type="file" accept="image/*" style="display: none;"><input type="file" accept="image/*" style="display: none;"><input type="file" accept="image/*" style="display: none;"><input type="file" accept="image/*" style="display: none;"><input type="file" accept="image/*" style="display: none;"><input type="file" accept="image/*" style="display: none;"><input type="file" accept="image/*" style="display: none;"><input type="file" accept="image/*" style="display: none;"><input type="file" accept="image/*" style="display: none;"><input type="file" accept="image/*" style="display: none;"><input type="file" accept="image/*" style="display: none;"><input type="file" accept="image/*" style="display: none;"><input type="file" accept="image/*" style="display: none;"></body></html>
